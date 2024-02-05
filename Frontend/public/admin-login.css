@@ -33,7 +33,7 @@
     justify-content: space-between;
 
 }
-.admin-login-btn{
+.user-login-btn{
     width: 30%;
 }
 .login-cont1,.login-cont2,.login-cont3,.login-cont4,.login-cont5{
@@ -57,23 +57,24 @@
     display: flex;
     justify-content: space-between;
 }
-.admin-btn,.login-btn{
+.user-btn,.login-btn{
     background-color: rgb(39, 39, 150);
     color: white;
     border: none;
 }
-.admin-btn:hover,.login-btn:hover{
+.user-btn:hover,.login-btn:hover{
     background-color: rgb(14, 177, 55);
+    
 }
-.admin-btn{
+.user-btn{
     height: 60%;
     width: 100%;
     border-radius: 10px;
 }
-.no-account-href:hover,.forgot-pwd-href:hover{
+.forgot-pwd-href:hover{
    color: rgb(14, 177, 55); 
 }
-.no-account-href,.forgot-pwd-href{
+.forgot-pwd-href{
     text-decoration: none;
     color: rgb(109, 108, 108);
 }
