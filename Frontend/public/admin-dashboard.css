@@ -2,6 +2,11 @@
   margin: 0%;
   padding: 0%;
 }
+body, body button{
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 .main {
   width: 100vw;
   min-height: 100vh;
@@ -36,12 +41,53 @@
 .icon-image{
     width: 30%;
 }
-.logout > ion-icon{
-    height: 100%;
+.overview-container{
+  margin-top: 10%;
+  height: 50%;
 }
-.logout-href{
-    text-decoration: none;
-    color: rgb(196, 195, 195);
+.overview-btn{
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  color: rgb(196, 195, 195);
+  border: none;
+  font-size: 20px;
+}
+.overview-btn:hover{
+  background-color: rgb(34, 0, 128);
+  color: white;
+}
+.create-container{
+  margin-top: 1%;
+  height: 50%;
+}
+.create-btn{
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  color: rgb(196, 195, 195);
+  border: none;
+  font-size: 20px;
+}
+.create-btn:hover{
+  background-color: rgb(34, 0, 128);
+  color: white;
+}
+.logout{
+    display: flex;
+    height: 8%;
+}
+.logout-btn{
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  color: rgb(196, 195, 195);
+  border: none;
+  font-size: 20px;
+}
+.logout-btn:hover{
+  background-color: rgb(34, 0, 128);
+  color: white;
 }
 .content {
   flex: 1;
