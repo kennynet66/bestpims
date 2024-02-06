@@ -4,17 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="user-dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <title>Admin Dashboard</title>
 </head>
 <body>
     <div class="main">
         <div class="side-bar">
-            jhgdsjhhhds
+            <div class="profile">
+                <div class="icon">
+                    <div class="icon-image">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </div>
+                    <div class="user-details">
+                        <p>Joe Doe <br>
+                        joedoe@email.abc</p>
+                    </div>
+                </div>
+                <div class="overview-container">
+                    <button class="overview-btn">
+                        <ion-icon name="home-outline"></ion-icon>
+                        Home
+                    </button>
+                </div>
+                <div class="create-container">
+                    <button class="create-btn">
+                        <ion-icon name="settings-outline"></ion-icon>
+                        Settings
+                    </button>
+                </div>
+            </div>
+            <div class="logout">
+                <button class="logout-btn">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                        Logout
+                </button>
+                
+            </div>
 
         </div>
         <div class="content">
-
+            <div class="todo-container">
+                <div class="todo-title">
+                    <div class="dot-icon">
+                        <ion-icon name="ellipse"></ion-icon> 
+                    </div>
+                    <div class="title-text">
+                        <h2>To Do</h2>
+                    </div>
+                    
+                </div>
+                <div class="todo-content">
+                    <div class="content-text">
+                        <h3>Brainstorming</h3><br>
+                        <p>Brainstorming helps team members diverse experince into play.</p>
+                    </div>
+                    <div class="mark-div">
+                        <input type="checkbox" name="" id=""> Mark as completed
+                    </div>
+                </div>
+            </div>
+            <div class="completed-container">
+                <div class="completed-div">
+                    Completed
+                </div>
+                <div class="completed-title">
+                    <div class="dot-icon">
+                        <ion-icon name="ellipse"></ion-icon> 
+                    </div>
+                    <div class="title-text">
+                        <h2>To Do</h2>
+                    </div>
+                    
+                </div>
+                <div class="todo-content">
+                    <div class="content-text">
+                        <h3>Brainstorming</h3><br>
+                        <p>Brainstorming helps team members diverse experince into play.</p>
+                    </div>
+                    <div class="mark-div">
+                        <input type="checkbox" name="" id="" checked> Mark as completed
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script src="../dist/user-dashboard.js"></script>
 </body>
 </html>
