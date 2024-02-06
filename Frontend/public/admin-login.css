@@ -2,6 +2,11 @@
     margin: 0%;
     padding: 0%;
 }
+body, body button,body input{
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 .main{
     height: 100vh;
     width: 100vw;
@@ -12,7 +17,7 @@
     flex-wrap: wrap;
 }
 .image-container{
-    width: 40%;
+    width: 35%;
     height: 80%;
 }
 .image{
@@ -23,11 +28,13 @@
     border-bottom-left-radius: 20px;
 }
 .login-container{
-    width: 45%;
+    width: 35%;
     height: 80%;
     display: flex;
     flex-direction: column;
     border: 1px solid rgb(204, 200, 200);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 .login-cont1{
     display: flex;
