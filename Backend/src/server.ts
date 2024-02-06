@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response, json } from 'express'
 import { router } from './routes/auth.routes';
+import { projectRouter } from './routes/project.routes';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -7,7 +8,8 @@ const app = express();
 
 app.use(json())
 
-app.use('/', router);
+app.use('/users', router);
+app.use('/project', projectRouter)
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction)=> {
     res.json({
