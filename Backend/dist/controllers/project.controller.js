@@ -12,39 +12,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginController = exports.signupController = void 0;
-const mssql_1 = __importDefault(require("mssql"));
+exports.projectController = void 0;
 const uuid_1 = require("uuid");
+const mssql_1 = __importDefault(require("mssql"));
 const sql_config_1 = require("../config/sql.config");
-const signupController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let id = (0, uuid_1.v4)();
+const projectController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = (0, uuid_1.v4)();
+    const { project_name, project_description, assigned_to, end_date } = req.body;
     try {
-        const { full_name, email, password } = req.body;
         const pool = yield mssql_1.default.connect(sql_config_1.sqlConfig);
         let result = (yield pool.request()
-            .input("user_id", mssql_1.default.VarChar, id)
-            .input("full_name", mssql_1.default.VarChar, full_name)
-            .input("email", mssql_1.default.VarChar, email)
-            .input("password", mssql_1.default.VarChar, password)
-            .execute('createUser')).rowsAffected;
+            .input("project_id", mssql_1.default.VarChar, id)
+            .input("project_name", mssql_1.default.VarChar, project_name)
+            .input("project_description", mssql_1.default.VarChar, project_description)
+            .input("assigned_to", mssql_1.default.VarChar, assigned_to)
+            .input("end_date", mssql_1.default.VarChar, end_date)
+            .execute('createProject')).rowsAffected;
         console.log(result);
-        // user.push(newUser);
-        return res.json({
-            message: "User created successfully",
-            // user
+        return res.status(200).json({
+            message: "Project created successfully"
         });
     }
     catch (error) {
-        return res.json(error);
+        return res.json({
+            error
+        });
     }
 });
-exports.signupController = signupController;
-const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { email, password, rememberMe } = req.body;
-    }
-    catch (error) {
-        return res.json({ error });
-    }
-});
-exports.loginController = loginController;
+exports.projectController = projectController;
