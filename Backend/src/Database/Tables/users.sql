@@ -1,0 +1,8 @@
+CREATE TABLE Users(
+    user_id VARCHAR(100) NOT NULL, 
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE, 
+    password VARCHAR(200) NOT NULL
+)
+
+SELECT * FROM Users

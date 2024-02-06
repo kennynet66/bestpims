@@ -1,5 +1,7 @@
 import express, { NextFunction, Request, Response, json } from 'express'
 import { router } from './routes/auth.routes';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 

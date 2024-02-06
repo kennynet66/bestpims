@@ -6,3 +6,15 @@ Content-Type: application/json
     "email": "JaneDoe@gmail.com",
     "password": "Boomplay@1"
 }
+
+###
+
+POST http://localhost:5000/project
+Content-Type: application/json
+
+{
+    "project_name": "Create Backend",
+    "project_description": "This is a description",
+    "assigned_to":"Kenedy Maina",
+    "end_date": "14/02/24"
+}
