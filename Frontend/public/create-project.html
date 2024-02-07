@@ -53,6 +53,9 @@
         <div class="content">
             <div class="form-container">
                 <form action="">
+                    <div class="popup">
+                        <h2>Project has successfully been created</h2>
+                    </div>
                     <div class="title">
                         <h2>Create Project</h2>
                     </div>
@@ -67,10 +70,18 @@
                         </textarea>
                     </div>
                     <div class="assignee-container">
-                        Assignee of the project <br>
-                        <input type="checkbox">Sheilla <br>
-                        <input type="checkbox">Sheilla <br>
-                        <input type="checkbox">Sheilla
+                        <label for="select">Assignee of the project</label>
+                        <select name="" id="select" class="name-select">
+                            <option value="">None</option>
+                            <option value="Sheilla">Sheilla</option>
+                            <option value="Sharon">Sharon</option>
+                            <option value="William">William</option>
+                            <option value="Kennedy">Kennedy</option>
+                        </select>
+                    </div>
+                    <div class="assignee-container">
+                        <label for="date">End date :</label>
+                        <input type="date" class="end-date">
                     </div>
                     <div class="button-container">
                         <button class="create-project-btn">Create Project</button>

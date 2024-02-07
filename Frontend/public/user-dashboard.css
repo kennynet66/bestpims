@@ -129,14 +129,16 @@ body button {
   justify-content: center;
 }
 .todo-content {
-  width: 92%;
-  height: 25vh;
+  width: 88%;
+  min-height: 25vh;
+  max-height: max-content;
   background-color: white;
   border-radius: 10px;
   margin: 4%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding-left: 4%;
 }
 .completed-container {
   width: 45%;
@@ -165,4 +167,17 @@ body button {
   margin-top: 4%;
    margin-left: 4%;
    border-radius: 5px;
+}
+.end-date{
+  padding-top: 4%;
+  color: purple;
+  font-weight: 700;
+}
+.end-date-complete{
+  padding-top: 4%;
+  color: green;
+  font-weight: 700;
+}
+.project-desc{
+  padding-top: 4%;
 }
