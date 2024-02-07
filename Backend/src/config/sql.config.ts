@@ -20,4 +20,3 @@ export const sqlConfig = {
     }
 }
 
-console.log(sqlConfig);
