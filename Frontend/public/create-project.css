@@ -110,10 +110,14 @@ body button {
   display: flex;
   flex-direction: column;
 }
-.name-container,.desc-container,.assignee-container,.button-container,.title{
+.name-container,.desc-container,.assignee-container,.button-container,.title,.popup{
     min-height: 20%;
     max-height: max-content;
     /* background-color: blueviolet; */
+}
+.popup{
+  color: green;
+  display: none;
 }
 .desc-textarea{
     width: 99%;
