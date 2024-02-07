@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="create-project.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <div class="main">
+        <div class="side-bar">
+            <div class="profile">
+                <div class="icon">
+                    <div class="icon-image">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </div>
+                    <div class="user-details">
+                        <p>Joe Doe <br>
+                        joedoe@email.abc</p>
+                    </div>
+                </div>
+                <div class="overview-container">
+                    <button class="overview-btn">
+                        <ion-icon name="home-outline"></ion-icon>
+                        Overview
+                    </button>
+                </div>
+                <div class="create-container">
+                    <button class="create-btn">
+                        <ion-icon name="create-outline"></ion-icon>
+                        Create
+                    </button>
+                </div>
+                <div class="create-container">
+                    <button class="create-btn">
+                        <ion-icon name="settings-outline"></ion-icon>
+                        Settings
+                    </button>
+                </div>
+            </div>
+            <div class="logout">
+                <button class="logout-btn">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                        Logout
+                </button>
+                
+            </div>
+
+        </div>
+        <div class="content">
+            <div class="form-container">
+                <form action="">
+                    <div class="title">
+                        <h2>Create Project</h2>
+                    </div>
+                    <div class="name-container">
+                        Name of the project <br>
+                        <input type="text" placeholder="Name of the project" class="name-input">
+                    </div>
+                    <div class="desc-container">
+                        Description of the project <br>
+                        <textarea name="" id="" cols="30" rows="10" placeholder="Description of the project"
+                        class="desc-textarea">    
+                        </textarea>
+                    </div>
+                    <div class="assignee-container">
+                        Assignee of the project <br>
+                        <input type="checkbox">Sheilla <br>
+                        <input type="checkbox">Sheilla <br>
+                        <input type="checkbox">Sheilla
+                    </div>
+                    <div class="button-container">
+                        <button class="create-project-btn">Create Project</button>
+                    </div>
+                    
+                </form>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script src="../dist/create-project.js"></script>
+</body>
+</html>
