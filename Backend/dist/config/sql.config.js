@@ -23,4 +23,3 @@ exports.sqlConfig = {
         trustServerCertificate: true
     }
 };
-console.log(exports.sqlConfig);

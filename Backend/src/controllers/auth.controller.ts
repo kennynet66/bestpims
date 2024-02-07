@@ -1,41 +1,72 @@
+// Import reqquired libraries
 import { Request, Response } from "express";
 import mssql from 'mssql'
 import { v4 } from 'uuid';
 import { sqlConfig } from "../config/sql.config";
 import { loginInterface, signupInterface } from "../interface/auth.interface";
+import bcrypt from 'bcrypt'
 
-export const signupController = async (req:Request, res:Response) => {
-    
+// This controller creates a new user and saves their data to the DB
+export const signupController = async (req: Request, res: Response) => {
+    // Generate a random ID for each user
     let id = v4();
     try {
-        const {full_name, email, password}:signupInterface = req.body;
-
+        // Get the request body
+        const { full_name, email, password }: signupInterface = req.body;
+        // hash the password using the bcrypt library
+        const hash_pwd = await bcrypt.hash(password, 5);
+        // Create new pool connection
         const pool = await mssql.connect(sqlConfig);
-
+        // execute a stored procedure to store the user data
         let result = (await pool.request()
-        .input("user_id", mssql.VarChar, id)
-        .input("full_name", mssql.VarChar, full_name)
-        .input("email", mssql.VarChar, email)
-        .input("password", mssql.VarChar, password)
-        .execute('createUser')).rowsAffected
+            .input("user_id", mssql.VarChar, id)
+            .input("full_name", mssql.VarChar, full_name)
+            .input("email", mssql.VarChar, email)
+            .input("password", mssql.VarChar, hash_pwd)
+            .execute('createUser')).recordset
 
-        console.log(result);
-        
-        // user.push(newUser);
         return res.json({
-            message:"User created successfully",
-            // user
+            message: "User created successfully",
         })
     } catch (error) {
         return res.json(error);
     }
 }
 
-
-export const loginController = async(req: Request, res: Response) => {
+// Login a user
+export const loginController = async (req: Request, res: Response) => {
     try {
-        const {email, password, rememberMe}:loginInterface = req.body
+        // get the request body
+        const { email, password }: loginInterface = req.body
+        // Create a new pool connection
+        const pool = await mssql.connect(sqlConfig);
+        // execute a stored procedure to get & verify login details
+        let user = (await pool.request()
+            .input("email", mssql.VarChar, email)
+            .execute("loginUser")).recordset
+
+        // check for a record with the parsed email
+        // record not found: return an error
+        if (user[0]?.email == email) {
+            // Compare pwd from the request body and the hashed pwd from the db
+            const isPwd = await bcrypt.compare(password, user[0].password)
+            // Incorrect pwd: return an error
+            // correct pwd: return success message
+            if (!isPwd) {
+                return res.status(401).json({
+                    error: "Incorrect Password"
+                })
+            } else {
+                return res.status(200).json({
+                    message: "Login success"
+                })
+            }
+        } else {
+            return res.status(401).json({
+                error: "User not found"
+            })
+        }
     } catch (error) {
-        return res.json({error})
+        return res.json({ error })
     }
 }

@@ -1,9 +1,9 @@
-POST http://localhost:5000/signup
+POST http://localhost:5000/users/signup
 Content-Type: application/json
 
 {
-    "full_name" : "Jane Doe",
-    "email": "JaneDoe@gmail.com",
+    "full_name" : "Sharon",
+    "email": "sharon@gmail.com",
     "password": "Boomplay@1"
 }
 

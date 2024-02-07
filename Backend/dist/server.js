@@ -27,14 +27,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
-const auth_routes_1 = require("./routes/auth.routes");
-const project_routes_1 = require("./routes/project.routes");
 const dotenv_1 = __importDefault(require("dotenv"));
+const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
+const project_routes_1 = __importDefault(require("./routes/project.routes"));
+const user_routes_1 = __importDefault(require("./routes/user.routes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, express_1.json)());
-app.use('/users', auth_routes_1.router);
-app.use('/project', project_routes_1.projectRouter);
+app.use('/auth', auth_routes_1.default);
+app.use('/project', project_routes_1.default);
+app.use('/user', user_routes_1.default);
 app.use((error, req, res, next) => {
     res.json({
         message: error.message
