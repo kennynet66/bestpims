@@ -4,6 +4,7 @@ let loginAdminBtn = document.querySelector(".admin-btn");
 let createAccountRef = document.querySelector(".no-account-href");
 let forgotPwdRef = document.querySelector(".forgot-pwd-href");
 loginBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     window.location.href = "user-dashboard.html";
 });
 loginAdminBtn.addEventListener("click", (e) => {
