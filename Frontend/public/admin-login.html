@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="admin-login.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
     <title>Admin Login Page</title>
 </head>
+
 <body>
     <div class="main">
         <div class="image-container">
@@ -24,30 +27,34 @@
                     <button class="user-btn">Login as User</button>
                 </div>
             </div>
-            <div class="login-cont2">
-                <label for="email">Email</label><br>
-                <input type="email" name="" id="email" placeholder="Enter Your Email Address">  
-            </div>
-            <div class="login-cont3">
-                <label for="password">Password</label><br>
-                <input type="password" name="" id="password" placeholder="Enter Your Password"> 
-            </div>
-            <div class="login-cont4">
-                <button class="login-btn">Login</button> 
-            </div>
-            <div class="login-cont5">
-                <div class="remember">
-                    <input type="checkbox" name="" id=""> Remember me
+            <form id="admin-login-form">
+                <div class="login-cont2">
+                    <label for="email">Email</label><br>
+                    <input type="email" name="" id="email" placeholder="Enter Your Email Address">
                 </div>
-                <div class="forgot-pwd">
-                    <a href="" class="forgot-pwd-href">Forgot Password</a> <br>
+                <div class="login-cont3">
+                    <label for="password">Password</label><br>
+                    <input type="password" name="" id="password" placeholder="Enter Your Password">
                 </div>
-                
-            </div>
+                <div class="login-cont4">
+                    <button class="login-btn">Login</button>
+                </div>
+                <div class="login-cont5">
+                    <div class="remember">
+                        <input type="checkbox" name="" id=""> Remember me
+                    </div>
+                    <div class="forgot-pwd">
+                        <a href="" class="forgot-pwd-href">Forgot Password</a> <br>
+                    </div>
+
+                </div>
+            </form>
+
 
         </div>
     </div>
-    
+
     <script src="../dist/admin-login.js"></script>
 </body>
+
 </html>
