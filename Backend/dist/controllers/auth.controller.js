@@ -1,0 +1,87 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.loginController = exports.signupController = void 0;
+const mssql_1 = __importDefault(require("mssql"));
+const uuid_1 = require("uuid");
+const sql_config_1 = require("../config/sql.config");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+// This controller creates a new user and saves their data to the DB
+const signupController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // Generate a random ID for each user
+    let id = (0, uuid_1.v4)();
+    try {
+        // Get the request body
+        const { full_name, email, password } = req.body;
+        // hash the password using the bcrypt library
+        const hash_pwd = yield bcrypt_1.default.hash(password, 5);
+        // Create new pool connection
+        const pool = yield mssql_1.default.connect(sql_config_1.sqlConfig);
+        // execute a stored procedure to store the user data
+        let result = (yield pool.request()
+            .input("user_id", mssql_1.default.VarChar, id)
+            .input("full_name", mssql_1.default.VarChar, full_name)
+            .input("email", mssql_1.default.VarChar, email)
+            .input("password", mssql_1.default.VarChar, hash_pwd)
+            .execute('createUser')).recordset;
+        return res.json({
+            message: "User created successfully",
+        });
+    }
+    catch (error) {
+        return res.json(error);
+    }
+});
+exports.signupController = signupController;
+// Login a user
+const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        // get the request body
+        const { email, password } = req.body;
+        // Create a new pool connection
+        const pool = yield mssql_1.default.connect(sql_config_1.sqlConfig);
+        // execute a stored procedure to get & verify login details
+        let user = (yield pool.request()
+            .input("email", mssql_1.default.VarChar, email)
+            .execute("loginUser")).recordset;
+        // check for a record with the parsed email
+        // record not found: return an error
+        if (((_a = user[0]) === null || _a === void 0 ? void 0 : _a.email) == email) {
+            // Compare pwd from the request body and the hashed pwd from the db
+            const isPwd = yield bcrypt_1.default.compare(password, user[0].password);
+            // Incorrect pwd: return an error
+            // correct pwd: return success message
+            if (!isPwd) {
+                return res.status(401).json({
+                    error: "Incorrect Password"
+                });
+            }
+            else {
+                return res.status(200).json({
+                    message: "Login success"
+                });
+            }
+        }
+        else {
+            return res.status(401).json({
+                error: "User not found"
+            });
+        }
+    }
+    catch (error) {
+        return res.json({ error });
+    }
+});
+exports.loginController = loginController;
