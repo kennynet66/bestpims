@@ -4,6 +4,8 @@ let createAccountRef = document.querySelector(".no-account-href") as HTMLAnchorE
 let forgotPwdRef = document.querySelector(".forgot-pwd-href") as HTMLAnchorElement;
 
 loginBtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+
     window.location.href="user-dashboard.html";
 });
 
@@ -20,5 +22,5 @@ createAccountRef.addEventListener("click",(e)=>{
 forgotPwdRef.addEventListener("click",(e)=>{
     e.preventDefault();
     
-    window.location.href="forgot-password.html"
+    window.location.href="forgot-password.html";
 });
