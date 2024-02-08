@@ -3,7 +3,7 @@ let logoutAdminBtn = document.querySelector(".logout-btn");
 let createProjectBtn = document.querySelector(".create-btn");
 let editBtn = document.querySelector(".edit-btn");
 let table = document.querySelector(".table");
-let projects = [];
+let projectsArr = [];
 logoutAdminBtn.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "admin-login.html";
@@ -17,14 +17,23 @@ editBtn.addEventListener("click", (e) => {
     window.location.href = "update-project.html";
 });
 function retrieveData() {
-    let stProjects = localStorage.getItem("Project");
-    ;
-    let storedProjects = JSON.parse(stProjects);
-    projects = storedProjects;
+    let data = localStorage.getItem("Project");
+    data = JSON.parse(data);
+    if (!data) {
+        displayProjects();
+    }
+    else {
+        data.forEach((el) => {
+            projectsArr.push(el);
+        });
+        localStorage.setItem("Project", JSON.stringify(projectsArr));
+        displayProjects();
+    }
     displayProjects();
 }
 function displayProjects() {
-    projects.forEach(project => {
+    table.textContent = "";
+    projectsArr.forEach((project, index) => {
         let dataRow = document.createElement("tr");
         dataRow.classList.add("data-row");
         let dataCell1 = document.createElement("td");
@@ -58,16 +67,7 @@ function displayProjects() {
         deleteBtnCreate.textContent = "Delete";
         deleteBtnCreate.addEventListener("click", (e) => {
             e.preventDefault();
-            dataCell6.removeChild(editBtnCreate);
-            dataCell7.removeChild(deleteBtnCreate);
-            dataRow.removeChild(dataCell1);
-            dataRow.removeChild(dataCell2);
-            dataRow.removeChild(dataCell3);
-            dataRow.removeChild(dataCell4);
-            dataRow.removeChild(dataCell5);
-            dataRow.removeChild(dataCell6);
-            dataRow.removeChild(dataCell7);
-            table.removeChild(dataRow);
+            deleteProject(index);
         });
         dataCell6.appendChild(editBtnCreate);
         dataCell7.appendChild(deleteBtnCreate);
@@ -80,5 +80,10 @@ function displayProjects() {
         dataRow.appendChild(dataCell7);
         table.appendChild(dataRow);
     });
+}
+function deleteProject(index) {
+    projectsArr.splice(index, 1);
+    displayProjects();
+    localStorage.setItem("Project", JSON.stringify(projectsArr));
 }
 retrieveData();
