@@ -19,6 +19,7 @@ overviewBtn.addEventListener("click",(e)=>{
     e.preventDefault();
 
     window.location.href="admin-dashboard.html";
+    
 })
 
 addProjectBtn.addEventListener("click",(e)=>{
