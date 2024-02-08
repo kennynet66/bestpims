@@ -37,6 +37,14 @@ window.onload = ()=> {
 
 
 
+function showPopUp(){
+    popupDivReg.style.display = "block";
+
+    setTimeout(() => {
+      popupDivReg.style.display = "none";
+    }, 3000);
+}
+
 haveAccountRef.addEventListener("click",(e)=>{
     e.preventDefault();
 

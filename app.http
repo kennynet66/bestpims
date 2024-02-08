@@ -1,0 +1,26 @@
+POST http://localhost:5000/users/signup
+Content-Type: application/json
+
+{
+    "full_name" : "Sharon",
+    "email": "sharon@gmail.com",
+    "password": "Boomplay@1"
+}
+
+###2
+POST http://localhost:5000/project/newproject
+Content-Type: application/json
+
+{
+    "project_name": "Create Fullstack",
+    "project_description": "This is a description",
+    "assigned_to":"Kenedy Maina",
+    "end_date": "14/02/24"
+}
+
+###
+GET http://localhost:5000/project
+
+###
+
+POST http://localhost:5000/project/delete/b85522ba-1ca8-42df-8b8f-b5b8bf603a70

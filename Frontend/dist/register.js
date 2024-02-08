@@ -24,6 +24,12 @@ window.onload = () => {
         saves.saveUser();
     }
 };
+function showPopUp() {
+    popupDivReg.style.display = "block";
+    setTimeout(() => {
+        popupDivReg.style.display = "none";
+    }, 3000);
+}
 haveAccountRef.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "login.html";
