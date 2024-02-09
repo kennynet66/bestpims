@@ -67,7 +67,7 @@ adminForm.addEventListener('submit', (e) => {
                 }
             }
             else {
-                alert("Invalid email");
+                alert("Not admin email");
             }
         }
         else {

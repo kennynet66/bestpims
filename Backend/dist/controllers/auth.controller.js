@@ -37,6 +37,7 @@ const signupController = (req, res) => __awaiter(void 0, void 0, void 0, functio
             .execute('createUser')).recordset;
         return res.json({
             message: "User created successfully",
+            result
         });
     }
     catch (error) {

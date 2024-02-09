@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 let haveAccountRef = document.querySelector(".have-account-href");
 let registerBtn = document.querySelector(".register-btn");
 let user_register_form = document.querySelector('#user-register-form');
@@ -6,24 +15,7 @@ let first_name = document.querySelector("#first-name-id");
 let last_name = document.querySelector("#last-name-id");
 let reg_email = document.querySelector("#email");
 let reg_pwd = document.querySelector('#password');
-// registerBtn.addEventListener("click",(e)=>{
-//     e.preventDefault();
-//     alert("Account has been created");
-// })
 let users = [];
-window.onload = () => {
-    let data = localStorage.getItem("pimsUser");
-    data = JSON.parse(data);
-    if (!data) {
-        return false;
-    }
-    else {
-        data.forEach((user) => {
-            users.push(user);
-        });
-        saves.saveUser();
-    }
-};
 function showPopUp() {
     popupDivReg.style.display = "block";
     setTimeout(() => {
@@ -34,7 +26,7 @@ haveAccountRef.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "login.html";
 });
-user_register_form.addEventListener('submit', (e) => {
+user_register_form.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
     let isvalid = first_name.value.trim() != "" &&
         last_name.value.trim() != "" &&
@@ -44,23 +36,32 @@ user_register_form.addEventListener('submit', (e) => {
         return alert("Please fill in all the fields");
     }
     else {
-        let user = {
-            id: users.length + 1,
-            fullName: first_name.value.trim() + last_name.value.trim(),
-            email: email.value.trim(),
-            password: password.value.trim(),
-            status: "user"
-        };
-        users.push(user);
-        saves.saveUser();
-        alert("Account has been created and logged in");
-        window.location.href = "user-dashboard.html";
+        let full_name = first_name.value.trim() + last_name.value.trim();
+        let user_email = email.value.trim();
+        let user_password = password.value.trim();
+        try {
+            const res = yield fetch('http://localhost:5000/auth/signup', {
+                headers: {
+                    accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    full_name: full_name,
+                    email: user_email,
+                    password: user_password
+                }),
+            });
+            const data = yield res.json();
+            if (data.code === "EREQUEST") {
+                console.log("Email exists");
+            }
+            else {
+                window.location.href = "user-dashboard.html";
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
-});
-// Classes to handle saving and retrieval of the local storage
-class localSaves {
-    saveUser() {
-        return localStorage.setItem('pimsUser', JSON.stringify(users));
-    }
-}
-let saves = new localSaves;
+}));

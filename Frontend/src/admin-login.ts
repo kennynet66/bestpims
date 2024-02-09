@@ -80,7 +80,7 @@ adminForm.addEventListener('submit', (e) => {
                     alert("Invalid password");
                 }
             } else {
-                alert("Invalid email");
+                alert("Not admin email");
             }
 
         } else {

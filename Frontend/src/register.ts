@@ -8,81 +8,66 @@ let reg_pwd = document.querySelector('#password') as HTMLInputElement
 
 // Interface for a new user
 interface newUser {
-    id: number
-    fullName: string;
-    email: string;
-    password: string;
-    status: string;
+    full_name: string;
+    user_email: string;
+    user_password: string;
 }
-// registerBtn.addEventListener("click",(e)=>{
-//     e.preventDefault();
-
-//     alert("Account has been created");
-// })
 let users: newUser[] = []
-window.onload = ()=> {
-    let data:any = localStorage.getItem("pimsUser")
-    data = JSON.parse(data);
-    
-
-    if(!data) {
-        return false
-    } else {
-        data.forEach((user:any) => {
-            users.push(user)
-        });
-        saves.saveUser();
-    }
-}
 
 
 
-function showPopUp(){
+function showPopUp() {
     popupDivReg.style.display = "block";
 
     setTimeout(() => {
-      popupDivReg.style.display = "none";
+        popupDivReg.style.display = "none";
     }, 3000);
 }
 
-haveAccountRef.addEventListener("click",(e)=>{
+haveAccountRef.addEventListener("click", (e) => {
     e.preventDefault();
 
-    window.location.href="login.html"
+    window.location.href = "login.html"
 })
 
-user_register_form.addEventListener('submit', (e) => {
+user_register_form.addEventListener('submit', async (e) => {
     e.preventDefault()
 
     let isvalid = first_name.value.trim() != "" &&
-    last_name.value.trim() != "" &&
-    email.value.trim() != "" &&
-    password.value.trim() != ""
+        last_name.value.trim() != "" &&
+        email.value.trim() != "" &&
+        password.value.trim() != ""
 
-    if(!isvalid) {
+    if (!isvalid) {
         return alert("Please fill in all the fields");
     } else {
-        let user: newUser = {
-            id: users.length + 1,
-            fullName: first_name.value.trim() + last_name.value.trim(),
-            email: email.value.trim(),
-            password: password.value.trim(),
-            status: "user"
+        let full_name = first_name.value.trim() + last_name.value.trim()
+        let user_email = email.value.trim()
+        let user_password = password.value.trim()
+
+        try {
+            const res = await fetch('http://localhost:5000/auth/signup', {
+                headers: { 
+                    accept: 'application/json',
+                    'Content-Type': 'application/json' 
+                },
+                method: "POST",
+                body: JSON.stringify({ 
+                    full_name: full_name,
+                    email: user_email,
+                    password: user_password
+                }),
+            })
+            const data = await res.json()
+            if(data.code === "EREQUEST") {
+                console.log("Email exists");
+            } else {
+                window.location.href = "user-dashboard.html"
+            }
+            
+
+        } catch (error) {
+            console.log(error);
         }
-
-        users.push(user)
-        saves.saveUser()
-
-        alert("Account has been created and logged in");
-        window.location.href="user-dashboard.html";
     }
 })
-
-// Classes to handle saving and retrieval of the local storage
-class localSaves {
-    saveUser(){
-        return localStorage.setItem('pimsUser', JSON.stringify(users))
-    }
-}
-
-let saves = new localSaves;

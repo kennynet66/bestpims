@@ -117,3 +117,13 @@ body, body button{
   height: 8vh;
 }
 
+.edit-btn, .delete-btn{
+  background-color: yellowgreen;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: rgb(233, 48, 48);
+}

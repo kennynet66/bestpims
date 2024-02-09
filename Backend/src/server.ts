@@ -3,15 +3,17 @@ import dotenv from 'dotenv';
 import router from './routes/auth.routes';
 import projectRouter from './routes/project.routes';
 import user_routes from './routes/user.routes';
+import cors from 'cors'
 dotenv.config();
 
 const app = express();
 
 app.use(json())
+app.use(cors());
 
 app.use('/auth', router);
 app.use('/project', projectRouter)
-app.use('/user', user_routes)
+app.use('/users', user_routes)
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction)=> {
     res.json({

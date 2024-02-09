@@ -11,7 +11,7 @@ export const getProjects = async (req: Request, res: Response)=> {
         let result = (await ((await pool).request().execute('getProjects'))).recordset;
 
         return res.status(200).json({
-            users: result
+            projects: result
         })
     } catch (error) {
         res.json({
@@ -21,10 +21,12 @@ export const getProjects = async (req: Request, res: Response)=> {
 }
 
 export const projectController = async (req: Request, res:Response) => {
-    const id = v4()
-
-    const { project_name, project_description, assigned_to, end_date } = req.body
     try {
+        const id = v4()
+    
+        const { project_name, project_description, assigned_to, end_date } = req.body
+        console.log("Received body", req.body);
+        
         const pool = await mssql.connect(sqlConfig);
 
         let result = (await pool.request()
@@ -35,10 +37,9 @@ export const projectController = async (req: Request, res:Response) => {
         .input("end_date", mssql.VarChar, end_date)
         .execute('createProject')).rowsAffected;
 
-        console.log(result);
         
         return res.status(200).json({
-            message: "Project created successfully"
+            message: "success"
         })
     } catch (error) {
         return res.json({
@@ -60,7 +61,7 @@ export const deleteProject = async (req: Request, res: Response) => {
         console.log(result);
 
         return res.status(200).json({
-            message: "Project deleted successfully"
+            message: "success"
         })
         
         

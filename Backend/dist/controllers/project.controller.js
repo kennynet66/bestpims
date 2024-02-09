@@ -21,7 +21,7 @@ const getProjects = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const pool = mssql_1.default.connect(sql_config_1.sqlConfig);
         let result = (yield ((yield pool).request().execute('getProjects'))).recordset;
         return res.status(200).json({
-            users: result
+            projects: result
         });
     }
     catch (error) {
@@ -32,9 +32,10 @@ const getProjects = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.getProjects = getProjects;
 const projectController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = (0, uuid_1.v4)();
-    const { project_name, project_description, assigned_to, end_date } = req.body;
     try {
+        const id = (0, uuid_1.v4)();
+        const { project_name, project_description, assigned_to, end_date } = req.body;
+        console.log("Received body", req.body);
         const pool = yield mssql_1.default.connect(sql_config_1.sqlConfig);
         let result = (yield pool.request()
             .input("project_id", mssql_1.default.VarChar, id)
@@ -43,9 +44,8 @@ const projectController = (req, res) => __awaiter(void 0, void 0, void 0, functi
             .input("assigned_to", mssql_1.default.VarChar, assigned_to)
             .input("end_date", mssql_1.default.VarChar, end_date)
             .execute('createProject')).rowsAffected;
-        console.log(result);
         return res.status(200).json({
-            message: "Project created successfully"
+            message: "success"
         });
     }
     catch (error) {
@@ -64,7 +64,7 @@ const deleteProject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             .execute('deleteproject')).rowsAffected;
         console.log(result);
         return res.status(200).json({
-            message: "Project deleted successfully"
+            message: "success"
         });
     }
     catch (error) {

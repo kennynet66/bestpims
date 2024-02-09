@@ -13,6 +13,7 @@ export const signupController = async (req: Request, res: Response) => {
     try {
         // Get the request body
         const { full_name, email, password }: signupInterface = req.body;
+        
         // hash the password using the bcrypt library
         const hash_pwd = await bcrypt.hash(password, 5);
         // Create new pool connection
@@ -27,6 +28,7 @@ export const signupController = async (req: Request, res: Response) => {
 
         return res.json({
             message: "User created successfully",
+            result
         })
     } catch (error) {
         return res.json(error);

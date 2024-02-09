@@ -1,13 +1,23 @@
-POST http://localhost:5000/users/signup
+### Create a new user
+
+POST http://localhost:5000/auth/signup
 Content-Type: application/json
 
 {
-    "full_name" : "Sharon",
-    "email": "sharon@gmail.com",
+    "full_name" : "Sharon Birgen",
+    "email": "sharoncherotich112@gmail.com",
     "password": "Boomplay@1"
 }
 
-###2
+### Get all users
+
+GET http://localhost:5000/users
+
+### Delete user by ID
+
+DELETE http://localhost:5000/users/delete/93a34ede-c1fd-43d9-af16-754d42e35a7d
+
+### Create a new project
 POST http://localhost:5000/project/newproject
 Content-Type: application/json
 
@@ -18,9 +28,9 @@ Content-Type: application/json
     "end_date": "14/02/24"
 }
 
-###
+### Get all projects
 GET http://localhost:5000/project
 
-###
+### Delete Project by ID
 
-POST http://localhost:5000/project/delete/b85522ba-1ca8-42df-8b8f-b5b8bf603a70
+POST http://localhost:5000/project/delete/d2f3f9b4-08cf-449e-8c47-48101960b4a2

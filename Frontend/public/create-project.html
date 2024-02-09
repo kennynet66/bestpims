@@ -52,7 +52,7 @@
         </div>
         <div class="content">
             <div class="form-container">
-                <form action="">
+                <form id="project-create-form">
                     <div class="popup">
                         <h2>Project has successfully been created</h2>
                     </div>
@@ -61,27 +61,27 @@
                     </div>
                     <div class="name-container">
                         Name of the project <br>
-                        <input type="text" placeholder="Name of the project" class="name-input">
+                        <input type="text" placeholder="Name of the project" class="name-input" required>
                     </div>
                     <div class="desc-container">
                         Description of the project <br>
-                        <textarea name="" id="" cols="30" rows="10" placeholder="Description of the project"
-                        class="desc-textarea">    
+                        <textarea name="" id="" cols="" rows="10" placeholder="Description of the project"
+                        class="desc-textarea" required>    
                         </textarea>
                     </div>
                     <div class="assignee-container">
                         <label for="select">Assignee of the project</label>
-                        <select name="" id="select" class="name-select">
-                            <option value="">None</option>
-                            <option value="Sheilla">Sheilla</option>
+                        <select name="" id="select" class="name-select" required>
+                            <option value="">---None---</option>
+                            <!-- <option value="Sheilla">Sheilla</option>
                             <option value="Sharon">Sharon</option>
                             <option value="William">William</option>
-                            <option value="Kennedy">Kennedy</option>
+                            <option value="Kennedy">Kennedy</option> -->
                         </select>
                     </div>
                     <div class="assignee-container">
                         <label for="date">End date :</label>
-                        <input type="date" class="end-date">
+                        <input type="date" class="end-date" required>
                     </div>
                     <div class="button-container">
                         <button class="create-project-btn">Create Project</button>
