@@ -30,7 +30,7 @@ export const deleteUser = (async(req: Request, res: Response)=>{
         .execute("deleteUser")).recordset
 
         return res.status(200).json({
-            message: "User deleted successfully",
+            success: "User deleted successfully",
             result
         })
     } catch (error) {
@@ -39,3 +39,23 @@ export const deleteUser = (async(req: Request, res: Response)=>{
         })
     }
 });
+
+export const oneUser = (async (req: Request, res: Response) =>{
+    try {
+        const user_id: string = req.params.id
+
+        const pool = await mssql.connect(sqlConfig);
+
+        const result = (await pool.request()
+        .input("user_id", mssql.VarChar, user_id)
+        .execute("oneUser")).recordset
+
+        return res.status(200).json({
+            result
+        })
+    } catch (error) {
+        res.status(500).json({
+            error
+        })
+    }
+})

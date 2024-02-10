@@ -6,8 +6,9 @@ CREATE TABLE Users(
     isAdmin BIT DEFAULT 0 
 )
 
-ALTER TABLE Users ADD isAdmin BIT DEFAULT 0 
+ALTER TABLE Users ADD isAdmin BIT DEFAULT 0
 
 SELECT * FROM Users
 
 DELETE FROM Users
+

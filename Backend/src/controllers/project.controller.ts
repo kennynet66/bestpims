@@ -24,7 +24,7 @@ export const projectController = async (req: Request, res:Response) => {
     try {
         const id = v4()
     
-        const { project_name, project_description, assigned_to, end_date } = req.body
+        const { project_name, project_description, assigned_to, end_date, asignee_name } = req.body
         console.log("Received body", req.body);
         
         const pool = await mssql.connect(sqlConfig);
@@ -35,6 +35,7 @@ export const projectController = async (req: Request, res:Response) => {
         .input("project_description", mssql.VarChar, project_description)
         .input("assigned_to", mssql.VarChar, assigned_to)
         .input("end_date", mssql.VarChar, end_date)
+        .input("asignee_name", mssql.VarChar, asignee_name)
         .execute('createProject')).rowsAffected;
 
         

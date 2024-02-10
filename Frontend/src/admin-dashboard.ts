@@ -9,7 +9,8 @@ interface projectInterface {
   project_name: string;
   project_description: string;
   assigned_to: string;
-  end_date: string
+  end_date: string;
+  asignee_name: string
 }
 
 // arrays
@@ -67,8 +68,6 @@ async function retrieveData() {
     // displayProjects();
 }
 function displayProjects(){
-    // table.textContent =""
-    console.log(projectsArr);
     
     let allProjects = document.querySelectorAll('.data-rows') as NodeListOf<HTMLTableRowElement>
     allProjects.forEach(el => {el.remove()})
@@ -90,7 +89,7 @@ function displayProjects(){
 
       let dataCell4 = document.createElement("td");
       dataCell4.classList.add("data-cell");
-      dataCell4.textContent = project.assigned_to;
+      dataCell4.textContent = project.asignee_name;
 
       let dataCell5 = document.createElement("td");
       dataCell5.classList.add("data-cell");
@@ -113,9 +112,23 @@ function displayProjects(){
       let deleteBtnCreate = document.createElement("button");
       deleteBtnCreate.classList.add("delete-btn");
       deleteBtnCreate.textContent = "Delete";
-      deleteBtnCreate.addEventListener("click", (e) => {
-        e.preventDefault();
-        deleteProject(index)
+      deleteBtnCreate.addEventListener("click", async(e) => {
+        let res = await fetch(` http://localhost:5000/project/delete/${project.project_id}`, {
+          headers: {
+            accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        })
+        let data = await res.json()
+
+        if(data.message === "success") {
+          window.location.reload()
+        } else {
+          console.log("Couldn't delete");
+          
+        }
+        
       });
 
       dataCell6.appendChild(editBtnCreate);

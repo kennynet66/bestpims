@@ -23,7 +23,6 @@ dotenv_1.default.config();
 // Create a token
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-    console.log("creating token.....");
     const token = jsonwebtoken_1.default.sign({ id }, "jdhg78ygh9eh934hbui3br783490hjr390h", {
         expiresIn: maxAge
     });
@@ -72,7 +71,6 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
         // check for a record with the parsed email
         // record not found: return an error
         if (((_a = user[0]) === null || _a === void 0 ? void 0 : _a.email) == email) {
-            const token = createToken(user[0].user_id);
             // Compare pwd from the request body and the hashed pwd from the db
             const isPwd = yield bcrypt_1.default.compare(password, user[0].password);
             // console.log(isPwd);
@@ -84,6 +82,7 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
                 });
             }
             else {
+                const token = createToken(user[0].user_id);
                 return res.status(200).json({
                     success: "Login success",
                     token

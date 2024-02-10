@@ -13,8 +13,6 @@ dotenv.config()
 // Create a token
 const maxAge = 3 * 24 * 60 * 60
 const createToken = (id: string) => {
-    console.log("creating token.....");
-    
     const token = jwt.sign({ id }, "jdhg78ygh9eh934hbui3br783490hjr390h", {
         expiresIn: maxAge
     })
@@ -29,7 +27,7 @@ export const signupController = async (req: Request, res: Response) => {
     try {
         // Get the request body
         const { full_name, email, password }: signupInterface = req.body;
-        
+
         // hash the password using the bcrypt library
         const hash_pwd = await bcrypt.hash(password, 5);
         // Create new pool connection
@@ -56,7 +54,7 @@ export const loginController = async (req: Request, res: Response) => {
     try {
         // get the request body
         const { email, password }: loginInterface = req.body
-        
+
         // Create a new pool connection
         const pool = await mssql.connect(sqlConfig);
         // execute a stored procedure to get & verify login details
@@ -64,15 +62,14 @@ export const loginController = async (req: Request, res: Response) => {
             .input("email", mssql.VarChar, email)
             .execute("loginUser")).recordset
 
-            // check for a record with the parsed email
-            // record not found: return an error
-            if (user[0]?.email == email) {
-            const token = createToken(user[0].user_id)
-            
+        // check for a record with the parsed email
+        // record not found: return an error
+        if (user[0]?.email == email) {
+
             // Compare pwd from the request body and the hashed pwd from the db
             const isPwd = await bcrypt.compare(password, user[0].password)
             // console.log(isPwd);
-            
+
             // Incorrect pwd: return an error
             // correct pwd: return success message
             if (!isPwd) {
@@ -80,6 +77,7 @@ export const loginController = async (req: Request, res: Response) => {
                     passerror: "Incorrect Password"
                 })
             } else {
+                const token = createToken(user[0].user_id)
                 return res.status(200).json({
                     success: "Login success",
                     token

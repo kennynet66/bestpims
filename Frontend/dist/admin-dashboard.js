@@ -55,8 +55,6 @@ function retrieveData() {
     });
 }
 function displayProjects() {
-    // table.textContent =""
-    console.log(projectsArr);
     let allProjects = document.querySelectorAll('.data-rows');
     allProjects.forEach(el => { el.remove(); });
     projectsArr.forEach((project, index) => {
@@ -73,7 +71,7 @@ function displayProjects() {
         dataCell3.textContent = project.project_description;
         let dataCell4 = document.createElement("td");
         dataCell4.classList.add("data-cell");
-        dataCell4.textContent = project.assigned_to;
+        dataCell4.textContent = project.asignee_name;
         let dataCell5 = document.createElement("td");
         dataCell5.classList.add("data-cell");
         dataCell5.textContent = project.end_date;
@@ -90,10 +88,22 @@ function displayProjects() {
         let deleteBtnCreate = document.createElement("button");
         deleteBtnCreate.classList.add("delete-btn");
         deleteBtnCreate.textContent = "Delete";
-        deleteBtnCreate.addEventListener("click", (e) => {
-            e.preventDefault();
-            deleteProject(index);
-        });
+        deleteBtnCreate.addEventListener("click", (e) => __awaiter(this, void 0, void 0, function* () {
+            let res = yield fetch(` http://localhost:5000/project/delete/${project.project_id}`, {
+                headers: {
+                    accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST'
+            });
+            let data = yield res.json();
+            if (data.message === "success") {
+                window.location.reload();
+            }
+            else {
+                console.log("Couldn't delete");
+            }
+        }));
         dataCell6.appendChild(editBtnCreate);
         dataCell7.appendChild(deleteBtnCreate);
         dataRow.appendChild(dataCell1);

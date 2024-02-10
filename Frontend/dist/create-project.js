@@ -20,13 +20,13 @@ let projectEndDate = document.querySelector(".end-date");
 let userArray = [];
 window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
     yield getUsers();
-    userArray.forEach((user) => {
+    userArray.forEach((user) => __awaiter(void 0, void 0, void 0, function* () {
         let opt = document.createElement('option');
         opt.setAttribute('id', user.user_id);
         opt.value = user.user_id;
         opt.textContent = user.full_name;
         projectAssignee.appendChild(opt);
-    });
+    }));
 });
 function getUsers() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -36,7 +36,6 @@ function getUsers() {
             users.users.forEach((user) => {
                 userArray.push(user);
             });
-            console.log(userArray);
             return userArray;
         }
         catch (error) {
@@ -58,7 +57,8 @@ projectForm.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, 
             project_name: projectName.value.trim(),
             project_description: projectDesc.value.trim(),
             assigned_to: projectAssignee.value.trim(),
-            end_date: projectEndDate.value.trim()
+            end_date: projectEndDate.value.trim(),
+            asignee_name: yield getName(projectAssignee.value.trim())
         };
         let res = yield fetch('http://localhost:5000/project/newproject', {
             headers: {
@@ -70,7 +70,8 @@ projectForm.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, 
                 project_name: project.project_name,
                 project_description: project.project_description,
                 assigned_to: project.assigned_to,
-                end_date: project.end_date
+                end_date: project.end_date,
+                asignee_name: project.asignee_name
             })
         });
         let data = yield res.json();
@@ -87,4 +88,17 @@ function success() {
     setTimeout(() => {
         popupDiv.style.display = "none";
     }, 3000);
+}
+function getName(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let name;
+        try {
+            let res = yield fetch(`http://localhost:5000/users/${id}`);
+            let data = yield res.json();
+            return data.result[0].full_name;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
 }

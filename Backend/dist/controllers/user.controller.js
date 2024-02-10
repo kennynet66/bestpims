@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.getUsers = void 0;
+exports.oneUser = exports.deleteUser = exports.getUsers = void 0;
 const mssql_1 = __importDefault(require("mssql"));
 const sql_config_1 = require("../config/sql.config");
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,12 +39,29 @@ exports.deleteUser = ((req, res) => __awaiter(void 0, void 0, void 0, function* 
             .input("user_id", mssql_1.default.VarChar, user_id)
             .execute("deleteUser")).recordset;
         return res.status(200).json({
-            message: "User deleted successfully",
+            success: "User deleted successfully",
             result
         });
     }
     catch (error) {
         return res.status(500).json({
+            error
+        });
+    }
+}));
+exports.oneUser = ((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user_id = req.params.id;
+        const pool = yield mssql_1.default.connect(sql_config_1.sqlConfig);
+        const result = (yield pool.request()
+            .input("user_id", mssql_1.default.VarChar, user_id)
+            .execute("oneUser")).recordset;
+        return res.status(200).json({
+            result
+        });
+    }
+    catch (error) {
+        res.status(500).json({
             error
         });
     }
