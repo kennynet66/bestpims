@@ -17,6 +17,18 @@ const mssql_1 = __importDefault(require("mssql"));
 const uuid_1 = require("uuid");
 const sql_config_1 = require("../config/sql.config");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+// Create a token
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+    console.log("creating token.....");
+    const token = jsonwebtoken_1.default.sign({ id }, "jdhg78ygh9eh934hbui3br783490hjr390h", {
+        expiresIn: maxAge
+    });
+    return token;
+};
 // This controller creates a new user and saves their data to the DB
 const signupController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Generate a random ID for each user
@@ -60,24 +72,27 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
         // check for a record with the parsed email
         // record not found: return an error
         if (((_a = user[0]) === null || _a === void 0 ? void 0 : _a.email) == email) {
+            const token = createToken(user[0].user_id);
             // Compare pwd from the request body and the hashed pwd from the db
             const isPwd = yield bcrypt_1.default.compare(password, user[0].password);
+            // console.log(isPwd);
             // Incorrect pwd: return an error
             // correct pwd: return success message
             if (!isPwd) {
                 return res.status(401).json({
-                    error: "Incorrect Password"
+                    passerror: "Incorrect Password"
                 });
             }
             else {
                 return res.status(200).json({
-                    message: "Login success"
+                    success: "Login success",
+                    token
                 });
             }
         }
         else {
             return res.status(401).json({
-                error: "User not found"
+                emailerror: "User not found"
             });
         }
     }

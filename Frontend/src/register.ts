@@ -62,7 +62,7 @@ user_register_form.addEventListener('submit', async (e) => {
             if(data.code === "EREQUEST") {
                 console.log("Email exists");
             } else {
-                window.location.href = "user-dashboard.html"
+                window.location.href = "login.html"
             }
             
 

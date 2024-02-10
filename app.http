@@ -9,6 +9,16 @@ Content-Type: application/json
     "password": "Boomplay@1"
 }
 
+### Login a user
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email": "sharoncherotich112@gmail.com",
+    "password": "Boomplay@1"
+}
+
 ### Get all users
 
 GET http://localhost:5000/users

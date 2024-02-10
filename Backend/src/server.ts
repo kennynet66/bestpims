@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import router from './routes/auth.routes';
 import projectRouter from './routes/project.routes';
 import user_routes from './routes/user.routes';
-import cors from 'cors'
+import cors from 'cors';
+import jwt from 'jsonwebtoken';
 dotenv.config();
 
 const app = express();

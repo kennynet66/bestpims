@@ -85,3 +85,8 @@ body, body button,body input{
     text-decoration: none;
     color: rgb(109, 108, 108);
 }
+
+.error {
+    color: red;
+    font-weight: bold;
+}

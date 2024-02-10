@@ -57,7 +57,7 @@ user_register_form.addEventListener('submit', (e) => __awaiter(void 0, void 0, v
                 console.log("Email exists");
             }
             else {
-                window.location.href = "user-dashboard.html";
+                window.location.href = "login.html";
             }
         }
         catch (error) {
