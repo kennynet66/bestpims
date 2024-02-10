@@ -5,6 +5,7 @@ import projectRouter from './routes/project.routes';
 import user_routes from './routes/user.routes';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
+import { requireAuth } from './middleware/auth.middleware';
 dotenv.config();
 
 const app = express();
@@ -15,6 +16,8 @@ app.use(cors());
 app.use('/auth', router);
 app.use('/project', projectRouter)
 app.use('/users', user_routes)
+
+app.get('*', requireAuth)
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction)=> {
     res.json({
