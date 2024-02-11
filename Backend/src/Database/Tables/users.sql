@@ -3,12 +3,12 @@ CREATE TABLE Users(
     full_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE, 
     password VARCHAR(200) NOT NULL,
-    isAdmin BIT DEFAULT 0 
+    isAdmin BIT DEFAULT 0,
+    isWelcomed BIT DEFAULT 0
 )
 
-ALTER TABLE Users ADD isAdmin BIT DEFAULT 0
+ALTER TABLE Users ADD isWelcomed BIT DEFAULT 0
 
 SELECT * FROM Users
 
 DELETE FROM Users
-
