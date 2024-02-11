@@ -181,3 +181,46 @@ body button {
 .project-desc{
   padding-top: 4%;
 }
+
+@media (max-width: 768px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+    /* background-color: aqua; */
+  }
+  .side-bar {
+    width: 96%;
+    height: 10vh;
+    position: fixed;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 1;
+  }
+  .profile {
+    display: flex;
+  }
+  .overview-container {
+    margin-top: 1%;
+    height: 50%;
+  }
+  .logout {
+    margin-top: 1%;
+    height: 50%;
+  }
+  .logout-btn,
+  .create-btn,
+  .overview-btn,
+  .settings-btn {
+    font-size: 12px;
+  }
+  .user-details > p {
+    font-size: 12px;
+  }
+
+  .content {
+    width: 100%;
+    margin-left: 0%;
+    margin-top: 12vh;
+  }
+  
+}

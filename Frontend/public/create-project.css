@@ -150,3 +150,48 @@ body button {
     background-color: rgb(34, 0, 128);
     color: white;
 }
+
+@media (max-width: 768px) {
+    .main{
+        display: flex;
+        flex-direction: column;
+        /* background-color: aqua; */
+    }
+    .side-bar{
+        width: 96%;
+        height: 10vh;
+        position: fixed;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .profile{
+        display: flex;
+    }
+    .overview-container {
+        margin-top: 1%;
+        height: 50%;
+    }
+    .logout{
+      margin-top: 1%;
+      height: 50%;
+    }
+    .logout-btn,.create-btn,.overview-btn{
+      font-size: 12px;
+    }
+    .user-details>p{
+      font-size: 12px;
+    }
+    
+    .content{
+      width: 100%;
+      margin-left: 0%;
+    }
+    .form-container{
+      width:80%;
+    }
+}
+@media (max-width: 425px) {
+   .form-container{
+      width:85%;  
+    }
+}
