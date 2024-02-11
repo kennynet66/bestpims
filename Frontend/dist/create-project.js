@@ -31,7 +31,12 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
 function getUsers() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let res = yield fetch('http://localhost:5000/users');
+            let res = yield fetch('http://localhost:5000/users', {
+                headers: {
+                    token: getToken()
+                },
+                method: 'GET'
+            });
             let users = yield res.json();
             users.users.forEach((user) => {
                 userArray.push(user);
@@ -75,6 +80,7 @@ projectForm.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, 
             })
         });
         let data = yield res.json();
+        console.log(data);
         success();
         projectForm.reset();
     }
@@ -101,4 +107,8 @@ function getName(id) {
             console.log(error);
         }
     });
+}
+function getToken() {
+    let token = localStorage.getItem('token');
+    return token = JSON.parse(token);
 }

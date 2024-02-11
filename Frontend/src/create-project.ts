@@ -29,7 +29,7 @@ let userArray: newUser[] = []
 
 window.onload = async () => {
     await getUsers()
-
+    
     userArray.forEach(async (user) =>{
         let opt = document.createElement('option');
         opt.setAttribute('id', user.user_id)
@@ -43,7 +43,12 @@ window.onload = async () => {
 
 async function getUsers() {
     try {
-        let res = await fetch('http://localhost:5000/users')
+        let res = await fetch('http://localhost:5000/users',{
+            headers: {
+                token: getToken()
+            },
+            method: 'GET'
+        })
 
         let users = await res.json()
 
@@ -93,6 +98,8 @@ projectForm.addEventListener('submit', async (e)=>{
         });
 
         let data = await res.json()
+        console.log(data);
+        
         success()
         projectForm.reset()
         
@@ -126,4 +133,9 @@ async function getName(id: string) {
     } catch (error) {
         console.log(error);
     }
+}
+
+function getToken() {
+    let token = localStorage.getItem('token')  as string;
+    return token = JSON.parse(token)
 }

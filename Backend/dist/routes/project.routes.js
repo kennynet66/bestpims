@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const project_controller_1 = require("../controllers/project.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
 const projectRouter = (0, express_1.Router)();
-projectRouter.post('/newproject', project_controller_1.projectController);
-projectRouter.get('/', project_controller_1.getProjects);
-projectRouter.post('/delete/:id', project_controller_1.deleteProject);
+projectRouter.post('/newproject', auth_middleware_1.requireAuth, project_controller_1.projectController);
+projectRouter.get('/', auth_middleware_1.requireAuth, project_controller_1.getProjects);
+projectRouter.post('/delete/:id', auth_middleware_1.requireAuth, project_controller_1.deleteProject);
 exports.default = projectRouter;

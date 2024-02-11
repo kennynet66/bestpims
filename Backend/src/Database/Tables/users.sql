@@ -11,4 +11,9 @@ ALTER TABLE Users ADD isWelcomed BIT DEFAULT 0
 
 SELECT * FROM Users
 
+UPDATE Users
+SET isAdmin = 1
+WHERE email = 'kennynet66@gmail.com';
+
+
 DELETE FROM Users
