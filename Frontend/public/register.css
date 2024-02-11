@@ -109,3 +109,18 @@ body, body button,body input{
   display: none;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+    .image-container{
+        display: none;
+    }
+    .register-container{
+        width: 70%;
+        border-radius: 0px;
+    }
+}
+@media (max-width: 425px) {
+    .register-container{
+        width: 90%;
+    }
+}
