@@ -104,14 +104,16 @@ body button {
   align-items: center;
 }
 .form-container {
-  height: 90%;
+  height: 80%;
   width: 60%;
-  /* background-color: aqua; */
+  background-color: whitesmoke;
   display: flex;
   flex-direction: column;
+  box-shadow: 5px 5px 10px 0px grey;
+  padding: 5%;
 }
 .name-container,.desc-container,.assignee-container,.button-container,.title{
-    min-height: 20%;
+    min-height: 25%;
     max-height: max-content;
     /* background-color: blueviolet; */
 }
@@ -129,7 +131,22 @@ body button {
 .name-input{
     width: 99%;
     margin-top: 2%;
+    height: 4vh;
+    padding-left: 1%;
+}
+.desc-textarea{
+  height: 10vh;
+  width: 99%;
+  padding-left: 1%;
 }
 .create-project-btn{
     width: 99%;
+    height: 8vh;
+    background-color: rgb(39, 39, 150);
+    color: rgb(196, 195, 195);
+    border: none;
+}
+.create-project-btn:hover{
+    background-color: rgb(34, 0, 128);
+    color: white;
 }

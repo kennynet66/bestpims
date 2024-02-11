@@ -102,18 +102,41 @@ body, body button{
 .table{
   width: 100%;
   margin-top: 3%;
-  border: 1px solid;
+  /* border: 1px solid; */
   text-align: center;
 }
-.table th,.table td ,.table tr{
+.table th,.table td {
   width: 10%;
-  border: 1px solid;
+}
+.table th{
+  background-color: rgb(154, 154, 253);
+  height: 8vh;
+}
+.table td{
+  background-color: whitesmoke;
+  height: 8vh;
 }
 .project-desc{
   width: 20%;
 }
 .edit-btn,.delete-btn{
-  width: 100%;
-  height: 8vh;
+  width: 60%;
+  height: 50%;
+  border: none;
+  color: white;
+}
+.edit-btn{
+  background-color: green;
+}
+.edit-btn:hover{
+  background-color: rgb(104, 240, 104);
+  color: black;
+}
+.delete-btn{
+  background-color: rgb(119, 5, 5);
+}
+.delete-btn:hover{
+  background-color: red;
+  color: black;
 }
 

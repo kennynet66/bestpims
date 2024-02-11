@@ -40,7 +40,7 @@ function retrieveData() {
     displayProjects();
 }
 function displayProjects(){
-    table.textContent =""
+    //  table.textContent =""
     projectsArr.forEach((project, index) => {
       let dataRow = document.createElement("tr");
       dataRow.classList.add("data-row");
