@@ -90,3 +90,17 @@ body, body button,body input{
     color: red;
     font-weight: bold;
 }
+@media (max-width: 768px) {
+    .image-container{
+        display: none;
+    }
+    .login-container{
+        width: 70%;
+        border-radius: 0px;
+    }
+}
+@media (max-width: 425px) {
+    .login-container{
+        width: 90%;
+    }
+}

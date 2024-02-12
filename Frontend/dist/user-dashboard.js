@@ -2,11 +2,44 @@
 let logoutBtn = document.querySelector(".logout-btn");
 let todoDiv = document.querySelector(".todo-content");
 let todoCont = document.querySelector(".todo-container");
+let completedCont = document.querySelector(".completed-container");
+let todoBtn = document.querySelector(".todo-btn");
+let completeBtn = document.querySelector(".complete-btn");
 let projects = [];
 logoutBtn.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "login.html";
 });
+function resizeScreen() {
+    if (window.screen.width < 426) {
+        completedCont.style.display = "none";
+        todoCont.style.display = "flex";
+        completeBtn.style.backgroundColor = "whitesmoke";
+        todoBtn.style.backgroundColor = "rgb(179, 175, 175)";
+    }
+    else {
+        completedCont.style.display = "flex";
+        todoCont.style.display = "flex";
+    }
+}
+completeBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    completedCont.style.display = "flex";
+    todoCont.style.display = "none";
+    completeBtn.style.backgroundColor = "rgb(179, 175, 175)";
+    todoBtn.style.backgroundColor = "whitesmoke";
+});
+todoBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    completedCont.style.display = "none";
+    todoCont.style.display = "flex";
+    completeBtn.style.backgroundColor = "whitesmoke";
+    todoBtn.style.backgroundColor = "rgb(179, 175, 175)";
+});
+window.addEventListener("resize", () => {
+    resizeScreen();
+});
+resizeScreen();
 function retrieveDataUser() {
     let stProjects = localStorage.getItem("Project");
     let storedProjects = JSON.parse(stProjects);
