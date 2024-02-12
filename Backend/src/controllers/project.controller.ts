@@ -52,11 +52,12 @@ export const projectController = async (req: Request, res:Response) => {
 export const deleteProject = async (req: Request, res: Response) => {
     try {
         const id = req.params.id
-
+        const { assigned_to } = req.body
         const pool = await mssql.connect(sqlConfig)
 
         let result = (await pool.request()
         .input("project_id", mssql.VarChar, id)
+        .input("assigned_to", mssql.VarChar, assigned_to)
         .execute('deleteproject')).rowsAffected
 
         console.log(result);
@@ -70,3 +71,26 @@ export const deleteProject = async (req: Request, res: Response) => {
         return res.json({error})
     }
 }
+
+export const completeProject = (async(req: Request, res:Response)=>{
+    try {
+        const id = req.params.id
+        const pool = await mssql.connect(sqlConfig);
+
+        const { assigned_to } = req.body
+
+        let result = (await pool.request()
+        .input("project_id", mssql.VarChar, id)
+        .input("assigned_to", mssql.VarChar, assigned_to)
+        .execute("completeProject")).recordset
+
+        res.status(200).json({
+            success: "Project completed",
+            result
+        })
+    } catch (error) {
+        res.status(500).json({
+            error
+        })
+    }
+})

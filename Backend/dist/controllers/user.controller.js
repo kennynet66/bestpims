@@ -18,7 +18,7 @@ const sql_config_1 = require("../config/sql.config");
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const pool = yield mssql_1.default.connect(sql_config_1.sqlConfig);
-        let result = (yield pool.request().query('SELECT * FROM Users')).recordset;
+        let result = (yield pool.request().query('SELECT * FROM Users WHERE isAdmin = 0 AND isASSIGNED = 0')).recordset;
         return res.status(200).json({
             users: result
         });

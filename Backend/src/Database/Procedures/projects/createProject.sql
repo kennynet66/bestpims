@@ -9,5 +9,7 @@ CREATE OR ALTER PROCEDURE createProject(
 AS
 BEGIN
     INSERT INTO Projects(project_id, project_name, project_description, assigned_to, end_date, asignee_name)
-    VALUES(@project_id, @project_name, @project_description, @assigned_to, @end_date, @asignee_name)
+    VALUES(@project_id, @project_name, @project_description, @assigned_to, @end_date, @asignee_name);
+
+    UPDATE Users SET isAssigned = 1 WHERE user_id = @assigned_to
 END

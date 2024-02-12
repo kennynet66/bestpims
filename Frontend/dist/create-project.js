@@ -38,6 +38,7 @@ function getUsers() {
                 method: 'GET'
             });
             let users = yield res.json();
+            console.log(users);
             users.users.forEach((user) => {
                 userArray.push(user);
             });
@@ -68,7 +69,8 @@ projectForm.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, 
         let res = yield fetch('http://localhost:5000/project/newproject', {
             headers: {
                 accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                token: getToken()
             },
             method: 'POST',
             body: JSON.stringify({
@@ -99,7 +101,13 @@ function getName(id) {
     return __awaiter(this, void 0, void 0, function* () {
         let name;
         try {
-            let res = yield fetch(`http://localhost:5000/users/${id}`);
+            let res = yield fetch(`http://localhost:5000/users/${id}`, {
+                headers: {
+                    accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    token: getToken()
+                }
+            });
             let data = yield res.json();
             return data.result[0].full_name;
         }
@@ -109,6 +117,6 @@ function getName(id) {
     });
 }
 function getToken() {
-    let token = localStorage.getItem('token');
+    let token = localStorage.getItem('adminToken');
     return token = JSON.parse(token);
 }

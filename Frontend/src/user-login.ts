@@ -60,9 +60,12 @@ form.addEventListener('submit', async (e)=>{
                 emailError.textContent = "Email not found"
             } else if(data.passerror) {
                 passError.textContent = data.passerror
-            } else if(data.success) {
-                localStorage.setItem('token', JSON.stringify(data.token))
-                login_Success(data.success)
+            } else if(data.admin) {
+                localStorage.setItem('adminToken', JSON.stringify(data.token))
+                admin_login_Success(data.admin)
+            } else if(data.user){
+                localStorage.setItem('userToken', JSON.stringify(data.token))
+                login_Success(data.user)
             }
             
         } catch (error) {
@@ -82,6 +85,15 @@ function login_Success(msg: string) {
     }, 3000);
 }
 
+function admin_login_Success(msg: string) {
+    loginSuccess.style.display = "block"
+    loginSuccess.textContent = msg
+    setTimeout(() => {
+        loginSuccess.style.display = "none"
+        window.location.href = 'admin-dashboard.html'
+    }, 3000);
+}
+
 loginAdminBtn.addEventListener("click",(e)=>{
     window.location.href="admin-login.html";
 });
@@ -98,66 +110,3 @@ forgotPwdRef.addEventListener("click",(e)=>{
     window.location.href="forgot-password.html";
 });
 
-// let storedUser: newUser[] = []
-
-// window.onload = ()=> {
-//     let data:any = localStorage.getItem("pimsUser")
-//     data = JSON.parse(data);
-    
-
-//     if(!data) {
-//         return false
-//     } else {
-//         data.forEach((user:any) => {
-//             storedUser.push(user)
-//         });
-//         localStorage.setItem("pimsUser", JSON.stringify(storedUser))
-//     }
-// }
-
-
-
-// Submit the form
-// form.addEventListener('submit', (e)=> {
-//     e.preventDefault()
-    
-//     let isvalid = email.value.trim() != "" &&
-//     password.value.trim() != "";
-
-//     if(!isvalid) {
-//         return alert("Please fill in all the details");
-//     } else {
-//         let isEmailValid = false;
-//         let isPasswordValid = false;
-        
-//         storedUser.forEach((user) => {
-//             if (email.value.trim() === user.email) {
-//                 isEmailValid = true;
-        
-//                 if (password.value.trim() === user.password) {
-//                     isPasswordValid = true;
-//                 }
-//             }
-//         });
-        
-//         if (isEmailValid) {
-//             if (isPasswordValid) {
-//                 window.location.href = "user-dashboard.html";
-//                 alert("Login success");
-//             } else {
-//                 alert("Invalid password");
-//             }
-//         } else {
-//             alert("Invalid email");
-//         }
-        
-//     }
-
-// });
-
-
-    // loginBtn.addEventListener("click",(e)=>{
-    //     e.preventDefault();
-    
-    //     window.location.href="user-dashboard.html";
-    // });

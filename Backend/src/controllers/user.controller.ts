@@ -6,7 +6,7 @@ export const getUsers = async (req: Request, res: Response) => {
     try {
         const pool = await mssql.connect(sqlConfig)
 
-        let result = (await pool.request().query('SELECT * FROM Users')).recordset
+        let result = (await pool.request().query('SELECT * FROM Users WHERE isAdmin = 0 AND isASSIGNED = 0')).recordset
 
         return res.status(200).json({
             users: result

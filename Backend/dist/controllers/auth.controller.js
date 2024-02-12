@@ -20,10 +20,17 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-// Create a token
+// Create a user token
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
     const token = jsonwebtoken_1.default.sign({ id }, "jdhg78ygh9eh934hbui3br783490hjr390h", {
+        expiresIn: maxAge
+    });
+    return token;
+};
+// Create an admin token
+const createAdminToken = (id) => {
+    const token = jsonwebtoken_1.default.sign({ id }, "sdtfgvys5648v63f76f7f236723f8ggf8te7", {
         expiresIn: maxAge
     });
     return token;
@@ -82,11 +89,20 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
                 });
             }
             else {
-                const token = createToken(user[0].user_id);
-                return res.status(200).json({
-                    success: "Login success",
-                    token
-                });
+                if (user[0].isAdmin) {
+                    const token = createAdminToken(user[0].user_id);
+                    res.status(200).json({
+                        admin: "Admin Login success",
+                        token
+                    });
+                }
+                else {
+                    const token = createToken(user[0].user_id);
+                    res.status(200).json({
+                        user: "User Login success",
+                        token
+                    });
+                }
             }
         }
         else {

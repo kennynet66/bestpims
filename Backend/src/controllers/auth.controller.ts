@@ -10,10 +10,19 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-// Create a token
+// Create a user token
 const maxAge = 3 * 24 * 60 * 60
 const createToken = (id: string) => {
     const token = jwt.sign({ id }, "jdhg78ygh9eh934hbui3br783490hjr390h", {
+        expiresIn: maxAge
+    })
+
+    return token
+}
+
+// Create an admin token
+const createAdminToken = (id: string) => {
+    const token = jwt.sign({ id }, "sdtfgvys5648v63f76f7f236723f8ggf8te7", {
         expiresIn: maxAge
     })
 
@@ -77,18 +86,26 @@ export const loginController = async (req: Request, res: Response) => {
                     passerror: "Incorrect Password"
                 })
             } else {
-                const token = createToken(user[0].user_id)
-                return res.status(200).json({
-                    success: "Login success",
-                    token
-                })
+                if (user[0].isAdmin) {
+                    const token = createAdminToken(user[0].user_id);
+                    res.status(200).json({
+                        admin: "Admin Login success",
+                        token
+                    })
+                } else {
+                    const token = createToken(user[0].user_id);
+                    res.status(200).json({
+                        user: "User Login success",
+                        token
+                    })
+                }
             }
         } else {
-            return res.status(401).json({
-                emailerror: "User not found"
-            })
-        }
-    } catch (error) {
-        return res.json({ error })
+        return res.status(401).json({
+            emailerror: "User not found"
+        })
     }
+} catch (error) {
+    return res.json({ error })
+}
 }

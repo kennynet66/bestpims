@@ -9,4 +9,4 @@ CREATE TABLE Projects(
 
 SELECT * FROM Projects
 
-ALTER TABLE Projects ADD asignee_name VARCHAR(200)
+ALTER TABLE Projects ADD isCompleted BIT NOT NULL DEFAULT 0

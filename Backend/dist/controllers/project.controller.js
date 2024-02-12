@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProject = exports.projectController = exports.getProjects = void 0;
+exports.completeProject = exports.deleteProject = exports.projectController = exports.getProjects = void 0;
 const uuid_1 = require("uuid");
 const mssql_1 = __importDefault(require("mssql"));
 const sql_config_1 = require("../config/sql.config");
@@ -59,9 +59,11 @@ exports.projectController = projectController;
 const deleteProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
+        const { assigned_to } = req.body;
         const pool = yield mssql_1.default.connect(sql_config_1.sqlConfig);
         let result = (yield pool.request()
             .input("project_id", mssql_1.default.VarChar, id)
+            .input("assigned_to", mssql_1.default.VarChar, assigned_to)
             .execute('deleteproject')).rowsAffected;
         console.log(result);
         return res.status(200).json({
@@ -73,3 +75,23 @@ const deleteProject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.deleteProject = deleteProject;
+exports.completeProject = ((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const pool = yield mssql_1.default.connect(sql_config_1.sqlConfig);
+        const { assigned_to } = req.body;
+        let result = (yield pool.request()
+            .input("project_id", mssql_1.default.VarChar, id)
+            .input("assigned_to", mssql_1.default.VarChar, assigned_to)
+            .execute("completeProject")).recordset;
+        res.status(200).json({
+            success: "Project completed",
+            result
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            error
+        });
+    }
+}));

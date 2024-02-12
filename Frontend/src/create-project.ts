@@ -51,6 +51,7 @@ async function getUsers() {
         })
 
         let users = await res.json()
+console.log(users);
 
         users.users.forEach((user: newUser) =>{
             userArray.push(user)
@@ -85,7 +86,8 @@ projectForm.addEventListener('submit', async (e)=>{
         let res = await fetch('http://localhost:5000/project/newproject', {
         headers: {
             accept: 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            token: getToken()
         },
         method: 'POST',
         body: JSON.stringify({
@@ -125,7 +127,13 @@ async function getName(id: string) {
     let name: string
 
     try {
-        let res = await fetch(`http://localhost:5000/users/${id}`)
+        let res = await fetch(`http://localhost:5000/users/${id}`, {
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json',
+                token: getToken()
+            }
+        })
 
         let data = await res.json()
 
@@ -136,6 +144,6 @@ async function getName(id: string) {
 }
 
 function getToken() {
-    let token = localStorage.getItem('token')  as string;
+    let token = localStorage.getItem('adminToken')  as string;
     return token = JSON.parse(token)
 }

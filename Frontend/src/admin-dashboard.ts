@@ -37,7 +37,12 @@ createProjectBtn.addEventListener("click",(e)=>{
 async function retrieveData() {
 
   try {
-    let res = await fetch('http://localhost:5000/project')
+    let res = await fetch('http://localhost:5000/project', {
+      headers: {
+        token: getAdmin_Token()
+    },
+    method: 'GET'
+    })
 
     let projects = await res.json()
 
@@ -48,30 +53,17 @@ async function retrieveData() {
     console.log(error);
     
   }
-  //   let data:any = localStorage.getItem("Project");
-  //   data = JSON.parse(data);
-
-  //   if(!data){
-  //       displayProjects()
-  //   } else{
-  //       data.forEach((el:any)=>{
-  //           projectsArr.push(el)
-          
-  //       })
-  //       console.log(projectsArr);
-        
-  // localStorage.setItem("Project", JSON.stringify(projectsArr));
-  // displayProjects()
-        
-  //   }
-
-    // displayProjects();
+  function getToken() {
+    let token = localStorage.getItem('adminToken')  as string;
+    return token = JSON.parse(token)
+}
 }
 function displayProjects(){
     
     let allProjects = document.querySelectorAll('.data-rows') as NodeListOf<HTMLTableRowElement>
     allProjects.forEach(el => {el.remove()})
-    projectsArr.forEach((project, index) => {
+    if(projectsArr.length >= 1){
+      projectsArr.forEach((project, index) => {
       let dataRow = document.createElement("tr");
       dataRow.classList.add("data-rows");
 
@@ -116,11 +108,17 @@ function displayProjects(){
         let res = await fetch(` http://localhost:5000/project/delete/${project.project_id}`, {
           headers: {
             accept: 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            token: getAdmin_Token()
           },
-          method: 'POST'
+          method: 'POST',
+          body: JSON.stringify({
+            assigned_to: project.assigned_to
+          })
         })
         let data = await res.json()
+        console.log(data);
+        
 
         if(data.message === "success") {
           window.location.reload()
@@ -142,6 +140,12 @@ function displayProjects(){
       dataRow.appendChild(dataCell7);
       table.appendChild(dataRow);
     });
+    } else {
+      let emptyArray = document.createElement('h1')
+      emptyArray.textContent = "No Projects Assigned to users"
+      table.appendChild(emptyArray)
+    }
+    
     
 }
 
@@ -149,4 +153,9 @@ function deleteProject(index:number){
     projectsArr.splice(index,1);
     displayProjects();
   localStorage.setItem("Project", JSON.stringify(projectsArr));
+}
+
+function getAdmin_Token() {
+  let token = localStorage.getItem('adminToken')  as string;
+  return token = JSON.parse(token)
 }
