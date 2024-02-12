@@ -32,7 +32,6 @@ window.onload = async () => {
     
     userArray.forEach(async (user) =>{
         let opt = document.createElement('option');
-        opt.setAttribute('id', user.user_id)
         opt.value = user.user_id
         opt.textContent = user.full_name
         projectAssignee.appendChild(opt);

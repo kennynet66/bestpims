@@ -22,7 +22,6 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
     yield getUsers();
     userArray.forEach((user) => __awaiter(void 0, void 0, void 0, function* () {
         let opt = document.createElement('option');
-        opt.setAttribute('id', user.user_id);
         opt.value = user.user_id;
         opt.textContent = user.full_name;
         projectAssignee.appendChild(opt);
