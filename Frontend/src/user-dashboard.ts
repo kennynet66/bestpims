@@ -1,6 +1,9 @@
 let logoutBtn=document.querySelector(".logout-btn") as HTMLButtonElement;
 let todoDiv = document.querySelector(".todo-content") as HTMLDivElement;
 let todoCont= document.querySelector(".todo-container") as HTMLDivElement;
+let completedCont = document.querySelector(".completed-container") as HTMLDivElement;
+let todoBtn=document.querySelector(".todo-btn") as HTMLButtonElement;
+let completeBtn = document.querySelector(".complete-btn") as HTMLButtonElement;
 let projects: any[] = [];
 
 logoutBtn.addEventListener("click",(e)=>{
@@ -8,6 +11,43 @@ logoutBtn.addEventListener("click",(e)=>{
 
     window.location.href="login.html"
 })
+
+function resizeScreen() {
+    if (window.screen.width < 426) {
+        completedCont.style.display = "none";
+        todoCont.style.display = "flex";
+        completeBtn.style.backgroundColor = "whitesmoke";
+        todoBtn.style.backgroundColor = "rgb(179, 175, 175)";
+    } 
+    else {
+        completedCont.style.display = "flex";
+        todoCont.style.display = "flex";
+    }
+}
+
+completeBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    completedCont.style.display = "flex";
+    todoCont.style.display = "none";
+    completeBtn.style.backgroundColor = "rgb(179, 175, 175)";
+    todoBtn.style.backgroundColor = "whitesmoke";
+});
+
+todoBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    completedCont.style.display = "none";
+    todoCont.style.display = "flex";
+    completeBtn.style.backgroundColor = "whitesmoke";
+    todoBtn.style.backgroundColor = "rgb(179, 175, 175)";
+});
+
+window.addEventListener("resize", () => {
+    resizeScreen();
+});
+
+resizeScreen();
 
 function retrieveDataUser() {
   let stProjects = localStorage.getItem("Project");
