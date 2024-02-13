@@ -9,3 +9,5 @@ BEGIN
     SET isASSIGNED = 0
     WHERE user_id = @assigned_to
 END
+
+SELECT * FROM Users

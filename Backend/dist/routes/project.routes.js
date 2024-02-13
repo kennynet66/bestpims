@@ -8,4 +8,5 @@ projectRouter.post('/newproject', auth_middleware_1.requireAdmin, project_contro
 projectRouter.get('/', auth_middleware_1.requireAdmin, project_controller_1.getProjects);
 projectRouter.post('/delete/:id', auth_middleware_1.requireAdmin, project_controller_1.deleteProject);
 projectRouter.post('/complete/:id', auth_middleware_1.requireAuth, project_controller_1.completeProject);
+projectRouter.get('/userprojects', auth_middleware_1.requireAuth, project_controller_1.userProjects);
 exports.default = projectRouter;

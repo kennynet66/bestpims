@@ -1,6 +1,7 @@
 import express from 'express'
 import cron from 'node-cron'
 import { welcomeuser } from './mailServices.ts/welcomeUser';
+import { informProject } from './mailServices.ts/projectInformer';
 const app = express();
 
 const run = async()=>{
@@ -8,6 +9,7 @@ const run = async()=>{
         console.log('checking for a new user');
         
         await welcomeuser()
+        await informProject()
     })
 }
 

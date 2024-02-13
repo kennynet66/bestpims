@@ -1,11 +1,27 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 let logoutBtn = document.querySelector(".logout-btn");
 let todoDiv = document.querySelector(".todo-content");
-let todoCont = document.querySelector(".todo-container");
+let todoCont = document.querySelector(".display-todos");
 let completedCont = document.querySelector(".completed-container");
 let todoBtn = document.querySelector(".todo-btn");
 let completeBtn = document.querySelector(".complete-btn");
-let projects = [];
+// load HTML ELEMENTS
+const userName = document.querySelector('#user-name');
+const userEmail = document.querySelector('#user-email');
+const compCont = document.querySelector(".display-completed");
+// arrays
+let projects = []; //Incomplete project
+let completedArr = []; // Completed 
+let currentUser = "";
 logoutBtn.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "login.html";
@@ -40,42 +56,148 @@ window.addEventListener("resize", () => {
     resizeScreen();
 });
 resizeScreen();
+window.onload = () => {
+    retrieveDataUser();
+};
 function retrieveDataUser() {
-    let stProjects = localStorage.getItem("Project");
-    let storedProjects = JSON.parse(stProjects);
-    projects = storedProjects;
-    displayProjectsUser();
-}
-function displayProjectsUser() {
-    projects.forEach(project => {
-        let projectNameUser = document.createElement("h3");
-        projectNameUser.classList.add("project-title");
-        projectNameUser.textContent = project.projectName;
-        let projectDescUser = document.createElement("p");
-        projectDescUser.classList.add("project-desc");
-        projectDescUser.textContent = project.projectDesc;
-        let projectEndDateUser = document.createElement("p");
-        projectEndDateUser.classList.add("end-date");
-        projectEndDateUser.textContent = `End date: ${project.projectEndDate}`;
-        let markComplete = document.createElement("input");
-        markComplete.type = "checkbox";
-        markComplete.classList.add("mark");
-        markComplete.textContent = "Mark as completed";
-        let labelText = document.createTextNode(" Mark as completed");
-        let contentDiv = document.createElement("div");
-        contentDiv.classList.add("content-text");
-        let markDiv = document.createElement("div");
-        markDiv.classList.add("mark-div");
-        let todoDiv = document.createElement("div");
-        todoDiv.classList.add("todo-content");
-        contentDiv.appendChild(projectNameUser);
-        contentDiv.appendChild(projectDescUser);
-        contentDiv.appendChild(projectEndDateUser);
-        markDiv.appendChild(markComplete);
-        markDiv.appendChild(labelText);
-        todoDiv.appendChild(contentDiv);
-        todoDiv.appendChild(markDiv);
-        todoCont.appendChild(todoDiv);
+    return __awaiter(this, void 0, void 0, function* () {
+        const res = (yield fetch('http://localhost:5000/project/userprojects', {
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json',
+                token: getUserToken()
+            },
+            method: 'GET'
+        }));
+        let data = yield res.json();
+        // console.log(data.projects);
+        data.projects.forEach((project) => {
+            if (!project.isCompleted) {
+                projects.push(project);
+            }
+            else {
+                completedArr.push(project);
+            }
+            displayProjectsUser();
+            completedProjects();
+        });
+        const user = yield fetch(`http://localhost:5000/users/${data.id}`, {
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json',
+                token: getUserToken()
+            },
+            method: 'GET'
+        });
+        currentUser = yield user.json();
+        userName.textContent = currentUser.result[0].full_name;
+        userEmail.textContent = currentUser.result[0].email;
+        //   displayProjectsUser();
     });
 }
-retrieveDataUser();
+function displayProjectsUser() {
+    todoCont.textContent = "";
+    if (projects.length >= 1) {
+        projects.forEach(project => {
+            let projectNameUser = document.createElement("h3");
+            projectNameUser.classList.add("project-title");
+            projectNameUser.textContent = project.project_name;
+            let projectDescUser = document.createElement("p");
+            projectDescUser.classList.add("project-desc");
+            projectDescUser.textContent = project.project_description;
+            let projectEndDateUser = document.createElement("p");
+            projectEndDateUser.classList.add("end-date");
+            projectEndDateUser.textContent = `End date: ${project.end_date}`;
+            let markComplete = document.createElement("input");
+            markComplete.type = "checkbox";
+            markComplete.classList.add("mark");
+            markComplete.textContent = "Mark as completed";
+            markComplete.addEventListener('change', () => __awaiter(this, void 0, void 0, function* () {
+                completeProject(project.project_id);
+            }));
+            let labelText = document.createTextNode(" Mark as completed");
+            let contentDiv = document.createElement("div");
+            contentDiv.classList.add("content-text");
+            let markDiv = document.createElement("div");
+            markDiv.classList.add("mark-div");
+            let todoDiv = document.createElement("div");
+            todoDiv.classList.add("todo-content");
+            contentDiv.appendChild(projectNameUser);
+            contentDiv.appendChild(projectDescUser);
+            contentDiv.appendChild(projectEndDateUser);
+            markDiv.appendChild(markComplete);
+            markDiv.appendChild(labelText);
+            todoDiv.appendChild(contentDiv);
+            todoDiv.appendChild(markDiv);
+            todoCont.appendChild(todoDiv);
+        });
+    }
+    else {
+        let emptArr = document.createElement('h1');
+        emptArr.textContent = "You are all caught up";
+        todoCont.appendChild(emptArr);
+    }
+}
+function completedProjects() {
+    compCont.textContent = "";
+    if (completedArr.length >= 1) {
+        completedArr.forEach(project => {
+            let projectNameUser = document.createElement("h3");
+            projectNameUser.classList.add("project-title");
+            projectNameUser.textContent = project.project_name;
+            let projectDescUser = document.createElement("p");
+            projectDescUser.classList.add("project-desc");
+            projectDescUser.textContent = project.project_description;
+            let projectEndDateUser = document.createElement("p");
+            projectEndDateUser.classList.add("end-date");
+            projectEndDateUser.textContent = `End date: ${project.end_date}`;
+            let markComplete = document.createElement("input");
+            markComplete.type = "checkbox";
+            markComplete.classList.add("mark");
+            markComplete.textContent = "Mark as completed";
+            markComplete.checked = true;
+            markComplete.disabled = true;
+            let labelText = document.createTextNode(" Completed");
+            let contentDiv = document.createElement("div");
+            contentDiv.classList.add("content-text");
+            let markDiv = document.createElement("div");
+            markDiv.classList.add("mark-div");
+            let todoDiv = document.createElement("div");
+            todoDiv.classList.add("todo-content");
+            contentDiv.appendChild(projectNameUser);
+            contentDiv.appendChild(projectDescUser);
+            contentDiv.appendChild(projectEndDateUser);
+            markDiv.appendChild(markComplete);
+            markDiv.appendChild(labelText);
+            todoDiv.appendChild(contentDiv);
+            todoDiv.appendChild(markDiv);
+            compCont.appendChild(todoDiv);
+        });
+    }
+    else {
+        let emptArr = document.createElement('h1');
+        // emptArr.className = "empthead"
+        emptArr.textContent = "Complete projects to see them here";
+        compCont.appendChild(emptArr);
+    }
+}
+function completeProject(project_id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`http://localhost:5000/project/complete/${project_id}`, {
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json',
+                token: getUserToken()
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                assigned_to: currentUser.result[0].user_id
+            })
+        });
+        window.location.reload;
+    });
+}
+function getUserToken() {
+    let token = localStorage.getItem('userToken');
+    return JSON.parse(token);
+}

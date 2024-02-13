@@ -37,7 +37,6 @@ function getUsers() {
                 method: 'GET'
             });
             let users = yield res.json();
-            console.log(users);
             users.users.forEach((user) => {
                 userArray.push(user);
             });
@@ -63,7 +62,8 @@ projectForm.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, 
             project_description: projectDesc.value.trim(),
             assigned_to: projectAssignee.value.trim(),
             end_date: projectEndDate.value.trim(),
-            asignee_name: yield getName(projectAssignee.value.trim())
+            asignee_name: yield getName(projectAssignee.value.trim()),
+            asignee_email: yield getemail(projectAssignee.value.trim())
         };
         let res = yield fetch('http://localhost:5000/project/newproject', {
             headers: {
@@ -77,7 +77,8 @@ projectForm.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, 
                 project_description: project.project_description,
                 assigned_to: project.assigned_to,
                 end_date: project.end_date,
-                asignee_name: project.asignee_name
+                asignee_name: project.asignee_name,
+                asignee_email: project.asignee_email
             })
         });
         let data = yield res.json();
@@ -100,7 +101,7 @@ function getName(id) {
     return __awaiter(this, void 0, void 0, function* () {
         let name;
         try {
-            let res = yield fetch(`http://localhost:5000/users/${id}`, {
+            let res = yield fetch(`http://localhost:5000/users/one/${id}`, {
                 headers: {
                     accept: 'application/json',
                     'Content-Type': 'application/json',
@@ -109,6 +110,25 @@ function getName(id) {
             });
             let data = yield res.json();
             return data.result[0].full_name;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+function getemail(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let name;
+        try {
+            let res = yield fetch(`http://localhost:5000/users/one/${id}`, {
+                headers: {
+                    accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    token: getToken()
+                }
+            });
+            let data = yield res.json();
+            return data.result[0].email;
         }
         catch (error) {
             console.log(error);

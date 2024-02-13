@@ -187,6 +187,11 @@ body button {
   padding-top: 4%;
 }
 
+h1.empthead{
+  text-align: center;
+  background-color: red;
+}
+
 @media (max-width: 768px) {
   .main {
     display: flex;

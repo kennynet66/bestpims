@@ -20,7 +20,8 @@ interface newProject {
     project_description: string,
     assigned_to: string,
     end_date: string,
-    asignee_name: string
+    asignee_name: string,
+    asignee_email: string
 }
 
 // Arrays
@@ -50,7 +51,6 @@ async function getUsers() {
         })
 
         let users = await res.json()
-console.log(users);
 
         users.users.forEach((user: newUser) =>{
             userArray.push(user)
@@ -79,7 +79,8 @@ projectForm.addEventListener('submit', async (e)=>{
             project_description: projectDesc.value.trim(),
             assigned_to: projectAssignee.value.trim(),
             end_date: projectEndDate.value.trim(),
-            asignee_name: await getName(projectAssignee.value.trim())
+            asignee_name: await getName(projectAssignee.value.trim()),
+            asignee_email: await getemail(projectAssignee.value.trim())
         }
         
         let res = await fetch('http://localhost:5000/project/newproject', {
@@ -94,7 +95,8 @@ projectForm.addEventListener('submit', async (e)=>{
             project_description: project.project_description,
             assigned_to: project.assigned_to,
             end_date: project.end_date,
-            asignee_name: project.asignee_name
+            asignee_name: project.asignee_name,
+            asignee_email: project.asignee_email
         })
         });
 
@@ -126,7 +128,7 @@ async function getName(id: string) {
     let name: string
 
     try {
-        let res = await fetch(`http://localhost:5000/users/${id}`, {
+        let res = await fetch(`http://localhost:5000/users/one/${id}`, {
             headers: {
                 accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -137,6 +139,26 @@ async function getName(id: string) {
         let data = await res.json()
 
         return data.result[0].full_name
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getemail(id: string) {
+    let name: string
+
+    try {
+        let res = await fetch(`http://localhost:5000/users/one/${id}`, {
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json',
+                token: getToken()
+            }
+        })
+
+        let data = await res.json()
+
+        return data.result[0].email
     } catch (error) {
         console.log(error);
     }

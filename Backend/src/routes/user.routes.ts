@@ -5,7 +5,8 @@ import { requireAdmin, requireAuth } from "../middleware/auth.middleware";
 const user_routes = Router()
 
 user_routes.get('/', requireAdmin, getUsers);
-user_routes.get('/:id', requireAdmin, oneUser);
+user_routes.get('/:id', requireAuth, oneUser);
+user_routes.get('/one/:id', requireAdmin, oneUser);
 user_routes.delete('/delete/:id', requireAdmin, deleteUser)
 
 export default user_routes
