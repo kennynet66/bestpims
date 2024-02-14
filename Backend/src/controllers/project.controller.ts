@@ -26,7 +26,6 @@ export const projectController = async (req: Request, res:Response) => {
         const id = v4()
     
         const { project_name, project_description, assigned_to, end_date, asignee_email,asignee_name } = req.body
-        console.log("Received body", req.body);
         
         const pool = await mssql.connect(sqlConfig);
 
@@ -84,10 +83,13 @@ export const completeProject = (async(req: Request, res:Response)=>{
         let result = (await pool.request()
         .input("project_id", mssql.VarChar, id)
         .input("assigned_to", mssql.VarChar, assigned_to)
-        .execute("completeProject")).recordset
+        .execute("completeProject")).rowsAffected
+
+        console.log(result);
+        
 
         res.status(200).json({
-            success: "Project completed",
+            success: "Completed",
             result
         })
     } catch (error) {

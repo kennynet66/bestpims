@@ -134,22 +134,24 @@ body button {
   justify-content: center;
 }
 .todo-content {
-  width: 88%;
+  /* max-width: 88%; */
   min-height: 25vh;
-  max-height: max-content;
+  /* max-height: max-content; */
   background-color: white;
   border-radius: 10px;
   margin: 4%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  padding-left: 4%;
+  justify-content: space-between;
+  padding: 10px;
+  /* padding-left: 4%; */
 }
 .completed-container {
   width: 45%;
   min-height: 40vh;
   max-height: max-content;
   background-color: whitesmoke;
+  padding: 10px;
   border-radius: 10px;
   margin-top: 5%;
   display: flex;
@@ -160,17 +162,14 @@ body button {
 }
 .completed-title {
   display: flex;
-  margin: 4%;
   border-bottom: 2px solid green;
 }
 .completed-div {
   background-color: rgb(177, 240, 177);
   color: green;
-  max-width: max-content;
-  padding: 1%;
-  padding-right: 2%;
-  margin-top: 4%;
-   margin-left: 4%;
+  width: max-content;
+  text-align: center;
+  padding: 5px;
    border-radius: 5px;
 }
 .end-date{

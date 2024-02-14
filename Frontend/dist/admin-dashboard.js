@@ -12,16 +12,16 @@ let logoutAdminBtn = document.querySelector(".logout-btn");
 let createProjectBtn = document.querySelector(".create-btn");
 let editBtn = document.querySelector(".edit-btn");
 let table = document.querySelector(".table");
+let noProjects = document.querySelector('.no-projects');
 // arrays
 let projectsArr = [];
 // When window loads
 window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
     yield retrieveData();
-    displayProjects();
 });
 logoutAdminBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href = "admin-login.html";
+    window.location.href = "login.html";
 });
 createProjectBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -40,26 +40,27 @@ function retrieveData() {
             projects.projects.forEach((project) => {
                 projectsArr.push(project);
             });
+            displayProjects();
         }
         catch (error) {
             console.log(error);
-        }
-        function getToken() {
-            let token = localStorage.getItem('adminToken');
-            return token = JSON.parse(token);
         }
     });
 }
 function displayProjects() {
     let allProjects = document.querySelectorAll('.data-rows');
-    allProjects.forEach(el => { el.remove(); });
+    allProjects.forEach(el => {
+        el.textContent = "";
+        el.remove();
+    });
+    noProjects.textContent = "";
     if (projectsArr.length >= 1) {
         projectsArr.forEach((project, index) => {
             let dataRow = document.createElement("tr");
             dataRow.classList.add("data-rows");
             let dataCell1 = document.createElement("td");
             dataCell1.classList.add("data-cell1");
-            dataCell1.textContent = project.project_id;
+            dataCell1.textContent = `${index + 1}`;
             let dataCell2 = document.createElement("td");
             dataCell2.classList.add("data-cell2");
             dataCell2.textContent = project.project_name;
@@ -100,7 +101,8 @@ function displayProjects() {
                 let data = yield res.json();
                 console.log(data);
                 if (data.message === "success") {
-                    window.location.reload();
+                    projectsArr = [];
+                    yield retrieveData();
                 }
                 else {
                     console.log("Couldn't delete");
@@ -119,15 +121,10 @@ function displayProjects() {
         });
     }
     else {
-        let emptyArray = document.createElement('h1');
-        emptyArray.textContent = "No Projects Assigned to users";
-        table.appendChild(emptyArray);
+        // let emptyArray = document.createElement('h1')
+        noProjects.textContent = "No Projects Assigned to users";
+        // table.appendChild(emptyArray)
     }
-}
-function deleteProject(index) {
-    projectsArr.splice(index, 1);
-    displayProjects();
-    localStorage.setItem("Project", JSON.stringify(projectsArr));
 }
 function getAdmin_Token() {
     let token = localStorage.getItem('adminToken');

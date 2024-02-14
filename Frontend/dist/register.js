@@ -16,12 +16,6 @@ let last_name = document.querySelector("#last-name-id");
 let reg_email = document.querySelector("#email");
 let reg_pwd = document.querySelector('#password');
 let users = [];
-function showPopUp() {
-    popupDivReg.style.display = "block";
-    setTimeout(() => {
-        popupDivReg.style.display = "none";
-    }, 3000);
-}
 haveAccountRef.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "login.html";
@@ -36,7 +30,7 @@ user_register_form.addEventListener('submit', (e) => __awaiter(void 0, void 0, v
         return alert("Please fill in all the fields");
     }
     else {
-        let full_name = first_name.value.trim() + last_name.value.trim();
+        let full_name = first_name.value.trim() + " " + last_name.value.trim();
         let user_email = email.value.trim();
         let user_password = password.value.trim();
         try {

@@ -2,6 +2,7 @@ let logoutAdminBtn = document.querySelector(".logout-btn") as HTMLButtonElement;
 let createProjectBtn=document.querySelector(".create-btn")   as HTMLButtonElement;
 let editBtn = document.querySelector(".edit-btn") as HTMLButtonElement;
 let table=document.querySelector(".table") as HTMLTableElement;
+let noProjects = document.querySelector('.no-projects') as HTMLHeadingElement;
 
 // Interfaces
 interface projectInterface {
@@ -19,13 +20,12 @@ let projectsArr: projectInterface[] = [];
 // When window loads
 window.onload = async() => {
   await retrieveData()
-  displayProjects()
 }
 
 logoutAdminBtn.addEventListener("click",(e)=>{
     e.preventDefault();
 
-    window.location.href="admin-login.html";
+    window.location.href="login.html";
 })
 
 createProjectBtn.addEventListener("click",(e)=>{
@@ -49,19 +49,20 @@ async function retrieveData() {
     projects.projects.forEach((project:projectInterface)=>{
       projectsArr.push(project)
     })
+    displayProjects()
   } catch (error) {
     console.log(error);
     
   }
-  function getToken() {
-    let token = localStorage.getItem('adminToken')  as string;
-    return token = JSON.parse(token)
-}
 }
 function displayProjects(){
     
     let allProjects = document.querySelectorAll('.data-rows') as NodeListOf<HTMLTableRowElement>
-    allProjects.forEach(el => {el.remove()})
+    allProjects.forEach(el => {
+      el.textContent = ""
+      el.remove()
+    })
+    noProjects.textContent = ""
     if(projectsArr.length >= 1){
       projectsArr.forEach((project, index) => {
       let dataRow = document.createElement("tr");
@@ -69,7 +70,7 @@ function displayProjects(){
 
       let dataCell1 = document.createElement("td");
       dataCell1.classList.add("data-cell1");
-      dataCell1.textContent = project.project_id;
+      dataCell1.textContent = `${index + 1}`;
 
       let dataCell2 = document.createElement("td");
       dataCell2.classList.add("data-cell2");
@@ -121,7 +122,8 @@ function displayProjects(){
         
 
         if(data.message === "success") {
-          window.location.reload()
+          projectsArr = []
+          await retrieveData()
         } else {
           console.log("Couldn't delete");
           
@@ -141,18 +143,12 @@ function displayProjects(){
       table.appendChild(dataRow);
     });
     } else {
-      let emptyArray = document.createElement('h1')
-      emptyArray.textContent = "No Projects Assigned to users"
-      table.appendChild(emptyArray)
+      // let emptyArray = document.createElement('h1')
+      noProjects.textContent = "No Projects Assigned to users"
+      // table.appendChild(emptyArray)
     }
     
     
-}
-
-function deleteProject(index:number){
-    projectsArr.splice(index,1);
-    displayProjects();
-  localStorage.setItem("Project", JSON.stringify(projectsArr));
 }
 
 function getAdmin_Token() {

@@ -21,7 +21,7 @@ const compCont = document.querySelector(".display-completed");
 // arrays
 let projects = []; //Incomplete project
 let completedArr = []; // Completed 
-let currentUser = "";
+let currentUser;
 logoutBtn.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "login.html";
@@ -70,7 +70,6 @@ function retrieveDataUser() {
             method: 'GET'
         }));
         let data = yield res.json();
-        // console.log(data.projects);
         data.projects.forEach((project) => {
             if (!project.isCompleted) {
                 projects.push(project);
@@ -92,7 +91,6 @@ function retrieveDataUser() {
         currentUser = yield user.json();
         userName.textContent = currentUser.result[0].full_name;
         userEmail.textContent = currentUser.result[0].email;
-        //   displayProjectsUser();
     });
 }
 function displayProjectsUser() {
@@ -149,6 +147,7 @@ function completedProjects() {
             projectDescUser.classList.add("project-desc");
             projectDescUser.textContent = project.project_description;
             let projectEndDateUser = document.createElement("p");
+            projectEndDateUser.className = "end-date-complete";
             projectEndDateUser.classList.add("end-date");
             projectEndDateUser.textContent = `End date: ${project.end_date}`;
             let markComplete = document.createElement("input");
@@ -194,7 +193,7 @@ function completeProject(project_id) {
                 assigned_to: currentUser.result[0].user_id
             })
         });
-        window.location.reload;
+        console.log(res);
     });
 }
 function getUserToken() {

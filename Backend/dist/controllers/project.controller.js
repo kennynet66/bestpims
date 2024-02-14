@@ -36,7 +36,6 @@ const projectController = (req, res) => __awaiter(void 0, void 0, void 0, functi
     try {
         const id = (0, uuid_1.v4)();
         const { project_name, project_description, assigned_to, end_date, asignee_email, asignee_name } = req.body;
-        console.log("Received body", req.body);
         const pool = yield mssql_1.default.connect(sql_config_1.sqlConfig);
         let result = (yield pool.request()
             .input("project_id", mssql_1.default.VarChar, id)
@@ -85,9 +84,10 @@ exports.completeProject = ((req, res) => __awaiter(void 0, void 0, void 0, funct
         let result = (yield pool.request()
             .input("project_id", mssql_1.default.VarChar, id)
             .input("assigned_to", mssql_1.default.VarChar, assigned_to)
-            .execute("completeProject")).recordset;
+            .execute("completeProject")).rowsAffected;
+        console.log(result);
         res.status(200).json({
-            success: "Project completed",
+            success: "Completed",
             result
         });
     }

@@ -15,15 +15,6 @@ interface newUser {
 let users: newUser[] = []
 
 
-
-function showPopUp() {
-    popupDivReg.style.display = "block";
-
-    setTimeout(() => {
-        popupDivReg.style.display = "none";
-    }, 3000);
-}
-
 haveAccountRef.addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -41,7 +32,7 @@ user_register_form.addEventListener('submit', async (e) => {
     if (!isvalid) {
         return alert("Please fill in all the fields");
     } else {
-        let full_name = first_name.value.trim() + last_name.value.trim()
+        let full_name = first_name.value.trim() + " " + last_name.value.trim()
         let user_email = email.value.trim()
         let user_password = password.value.trim()
 
